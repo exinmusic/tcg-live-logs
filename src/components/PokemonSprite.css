@@ -1,0 +1,113 @@
+/**
+ * PokemonSprite Styles
+ * Requirements: 5.3, 5.4, 6.1
+ */
+
+.pokemon-sprite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--bg-hover);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.pokemon-sprite:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* Size variants */
+.pokemon-sprite--small {
+  border-radius: var(--radius-sm);
+}
+
+.pokemon-sprite--medium {
+  border-radius: var(--radius-md);
+}
+
+.pokemon-sprite--large {
+  border-radius: var(--radius-lg);
+}
+
+/* Image styling */
+.pokemon-sprite__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity var(--transition-base);
+}
+
+.pokemon-sprite__image--loaded {
+  animation: fadeIn var(--transition-base);
+}
+
+/* Loading state */
+.pokemon-sprite--loading {
+  background: linear-gradient(
+    90deg,
+    var(--bg-hover) 25%,
+    var(--bg-active) 50%,
+    var(--bg-hover) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.pokemon-sprite__loader {
+  width: 50%;
+  height: 50%;
+  border: 2px solid var(--color-primary-light);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Placeholder state */
+.pokemon-sprite--placeholder {
+  background-color: var(--color-primary-subtle);
+  border: 1px dashed var(--color-primary-light);
+}
+
+.pokemon-sprite__placeholder-icon {
+  font-size: 1.5em;
+  opacity: 0.6;
+  color: var(--text-muted);
+}
+
+.pokemon-sprite--small .pokemon-sprite__placeholder-icon {
+  font-size: 1em;
+}
+
+.pokemon-sprite--large .pokemon-sprite__placeholder-icon {
+  font-size: 2em;
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pokemon-sprite:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}

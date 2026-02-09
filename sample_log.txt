@@ -1,0 +1,326 @@
+Setup
+SpaghettiEd chose tails for the opening coin flip.
+xxXBLUESINXxx won the coin toss.
+xxXBLUESINXxx decided to go first.
+SpaghettiEd drew 7 cards for the opening hand.
+- 7 drawn cards.
+   • Ignition Energy, Wugtrio, Buddy-Buddy Poffin, Drakloak, Wugtrio, Ultra Ball, Xerosic's Machinations
+xxXBLUESINXxx drew 7 cards for the opening hand.
+- 7 drawn cards.
+SpaghettiEd took a mulligan.
+- Cards revealed from Mulligan 1
+   • Ignition Energy, Wugtrio, Buddy-Buddy Poffin, Drakloak, Wugtrio, Ultra Ball, Xerosic's Machinations
+xxXBLUESINXxx drew 1 more card because SpaghettiEd took at least 1 mulligan.
+- xxXBLUESINXxx drew a card.
+SpaghettiEd played Dreepy to the Active Spot.
+SpaghettiEd played Dreepy to the Bench.
+xxXBLUESINXxx played Snorunt to the Active Spot.
+xxXBLUESINXxx played Kyogre to the Bench.
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx attached Basic Water Energy to Snorunt in the Active Spot.
+xxXBLUESINXxx ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Wugtrio.
+SpaghettiEd played Arven.
+- SpaghettiEd drew 2 cards.
+   • Nest Ball, Gravity Gemstone
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Nest Ball.
+- SpaghettiEd drew Wiglett and played it to the Bench.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd attached Reversal Energy to Wiglett on the Bench.
+SpaghettiEd attached Gravity Gemstone to Wiglett on the Bench.
+SpaghettiEd ended their turn.
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx evolved Snorunt to Mega Froslass ex in the Active Spot.
+xxXBLUESINXxx played Hilda.
+- xxXBLUESINXxx drew 2 cards.
+   • Kingdra, Basic Water Energy
+- xxXBLUESINXxx shuffled their deck.
+xxXBLUESINXxx attached Basic Water Energy to Mega Froslass ex in the Active Spot.
+xxXBLUESINXxx's Mega Froslass ex used Resentful Refrain on SpaghettiEd’s Dreepy for 200 damage.
+- Damage breakdown:
+   • 4 cards in hand: 200 damage
+
+SpaghettiEd's Dreepy was Knocked Out!
+xxXBLUESINXxx took a Prize card.
+A card was added to xxXBLUESINXxx's hand.
+SpaghettiEd's Wiglett is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Hilda.
+SpaghettiEd evolved Wiglett to Wugtrio in the Active Spot.
+SpaghettiEd played Hilda.
+- SpaghettiEd drew 2 cards.
+   • Drakloak, Reversal Energy
+- SpaghettiEd shuffled their deck.
+SpaghettiEd evolved Dreepy to Drakloak on the Bench.
+SpaghettiEd played Redeemable Ticket.
+- SpaghettiEd shuffled their Prize cards.
+- SpaghettiEd put 6 cards on the bottom of their deck.
+- SpaghettiEd moved SpaghettiEd's 6 cards to the Prize cards.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Iono.
+SpaghettiEd played Counter Catcher.
+- xxXBLUESINXxx's Kyogre was switched with xxXBLUESINXxx's Mega Froslass ex to become the Active Pokémon.
+xxXBLUESINXxx's Kyogre is now in the Active Spot.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 1 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 3 cards to the discard pile.
+   • Nest Ball, Kingdra, Basic Water Energy
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx attached Basic Water Energy to Kyogre in the Active Spot.
+xxXBLUESINXxx ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Counter Catcher.
+SpaghettiEd played Iono.
+- SpaghettiEd shuffled their hand.
+- SpaghettiEd put 3 cards on the bottom of their deck.
+   • Wugtrio, Counter Catcher, Reversal Energy
+- xxXBLUESINXxx shuffled their hand.
+- SpaghettiEd put 7 cards on the bottom of their deck.
+- SpaghettiEd drew 6 cards.
+   • Ignition Energy, Ignition Energy, Arven, Wugtrio, Drakloak, Buddy-Buddy Poffin
+- SpaghettiEd drew 5 cards.
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd drew 2 cards and played them to the Bench.
+   • Wiglett, Wiglett
+- SpaghettiEd shuffled their deck.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Hilda.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 1 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 3 cards to the discard pile.
+   • Basic Water Energy, Air Balloon, Seadra
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx played Precious Trolley.
+- xxXBLUESINXxx drew 3 cards and played them to the Bench.
+   • Walking Wake ex, Horsea, Horsea
+- xxXBLUESINXxx shuffled their deck.
+xxXBLUESINXxx played Snorunt to the Bench.
+xxXBLUESINXxx attached Basic Water Energy to Walking Wake ex on the Bench.
+xxXBLUESINXxx played Lillie's Determination.
+- xxXBLUESINXxx shuffled 2 cards into their deck.
+- xxXBLUESINXxx drew 6 cards.
+xxXBLUESINXxx ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Reversal Energy.
+SpaghettiEd evolved Wiglett to Wugtrio on the Bench.
+SpaghettiEd attached Reversal Energy to Wugtrio on the Bench.
+SpaghettiEd played Hilda.
+- SpaghettiEd drew 2 cards.
+   • Wugtrio, Reversal Energy
+- SpaghettiEd shuffled their deck.
+SpaghettiEd evolved Wiglett to Wugtrio on the Bench.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Buddy-Buddy Poffin.
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd drew 2 cards and played them to the Bench.
+   • Dreepy, Wiglett
+- SpaghettiEd shuffled their deck.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 0 landed on heads.
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx evolved Horsea to Seadra on the Bench.
+xxXBLUESINXxx played Rare Candy.
+- xxXBLUESINXxx evolved Horsea to Kingdra on the Bench.
+xxXBLUESINXxx attached Basic Water Energy to Kyogre in the Active Spot.
+xxXBLUESINXxx played Dawn.
+- xxXBLUESINXxx drew 3 cards.
+   • Horsea, Mega Froslass ex, Kingdra
+- xxXBLUESINXxx shuffled their deck.
+xxXBLUESINXxx evolved Snorunt to Mega Froslass ex on the Bench.
+xxXBLUESINXxx ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Drakloak.
+SpaghettiEd evolved Dreepy to Drakloak on the Bench.
+SpaghettiEd attached Reversal Energy to Wugtrio on the Bench.
+SpaghettiEd played Arven.
+- SpaghettiEd drew 2 cards.
+   • Counter Catcher, Gravity Gemstone
+- SpaghettiEd shuffled their deck.
+SpaghettiEd attached Gravity Gemstone to Wugtrio on the Bench.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Cleffa.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Ultra Ball.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 3 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 9 cards to the discard pile.
+   • Hilda, Hilda, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Iono, Surfing Beach
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx evolved Seadra to Kingdra on the Bench.
+xxXBLUESINXxx played Boss's Orders.
+- SpaghettiEd's Drakloak was switched with SpaghettiEd's Wugtrio to become the Active Pokémon.
+SpaghettiEd's Drakloak is now in the Active Spot.
+xxXBLUESINXxx's Kyogre used Riptide on SpaghettiEd’s Drakloak for 140 damage.
+- Damage breakdown:
+   • 7 attached Energy: 140 damage
+
+- xxXBLUESINXxx shuffled 7 cards into their deck.
+   • Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy
+SpaghettiEd's Drakloak was Knocked Out!
+Dreepy was discarded from SpaghettiEd's Drakloak.
+xxXBLUESINXxx took a Prize card.
+A card was added to xxXBLUESINXxx's hand.
+SpaghettiEd's Wugtrio is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Reversal Energy.
+SpaghettiEd attached Reversal Energy to Wiglett on the Bench.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 2 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 6 cards to the discard pile.
+   • Earthen Vessel, Basic Water Energy, Boss's Orders, Boss's Orders, Rare Candy, Arven
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx attached Basic Water Energy to Kingdra on the Bench.
+xxXBLUESINXxx played Lillie's Determination.
+- xxXBLUESINXxx shuffled 3 cards into their deck.
+- xxXBLUESINXxx drew 6 cards.
+xxXBLUESINXxx played Surfing Beach to the Stadium spot.
+xxXBLUESINXxx played Surfing Beach.
+- xxXBLUESINXxx's Mega Froslass ex was switched with xxXBLUESINXxx's Kyogre to become the Active Pokémon.
+xxXBLUESINXxx's Mega Froslass ex is now in the Active Spot.
+xxXBLUESINXxx's Mega Froslass ex used Resentful Refrain on SpaghettiEd’s Wugtrio for 300 damage.
+- Damage breakdown:
+   • 6 cards in hand: 300 damage
+
+SpaghettiEd's Wugtrio was Knocked Out!
+- 3 cards were discarded from SpaghettiEd's Wugtrio.
+   • Reversal Energy, Wiglett, Gravity Gemstone
+xxXBLUESINXxx took a Prize card.
+A card was added to xxXBLUESINXxx's hand.
+SpaghettiEd's Wugtrio is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Arven.
+SpaghettiEd played Counter Catcher.
+- xxXBLUESINXxx's Kingdra was switched with xxXBLUESINXxx's Mega Froslass ex to become the Active Pokémon.
+xxXBLUESINXxx's Kingdra is now in the Active Spot.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 2 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 6 cards to the discard pile.
+   • Basic Water Energy, Basic Water Energy, Air Balloon, Lillie's Determination, Dawn, Basic Water Energy
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx attached Basic Water Energy to Walking Wake ex on the Bench.
+xxXBLUESINXxx played Surfing Beach.
+- xxXBLUESINXxx's Kyogre was switched with xxXBLUESINXxx's Kingdra to become the Active Pokémon.
+xxXBLUESINXxx's Kyogre is now in the Active Spot.
+xxXBLUESINXxx's Kyogre used Riptide on SpaghettiEd’s Wugtrio for 80 damage.
+- Damage breakdown:
+   • 4 attached Energy: 80 damage
+
+- xxXBLUESINXxx shuffled 4 cards into their deck.
+   • Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy
+
+[playerName]'s Turn
+SpaghettiEd drew Artazon.
+SpaghettiEd played Artazon to the Stadium spot.
+- xxXBLUESINXxx discarded Surfing Beach.
+SpaghettiEd played Arven.
+- SpaghettiEd drew 2 cards.
+   • Counter Catcher, Air Balloon
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Counter Catcher.
+- xxXBLUESINXxx's Kingdra was switched with xxXBLUESINXxx's Kyogre to become the Active Pokémon.
+xxXBLUESINXxx's Kingdra is now in the Active Spot.
+SpaghettiEd played Artazon.
+- SpaghettiEd drew Dreepy and played it to the Bench.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Buddy-Buddy Poffin.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 1 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 3 cards to the discard pile.
+   • Boss's Orders, Basic Water Energy, Basic Water Energy
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx attached Basic Water Energy to Kingdra in the Active Spot.
+xxXBLUESINXxx played Lillie's Determination.
+- xxXBLUESINXxx shuffled 5 cards into their deck.
+- xxXBLUESINXxx drew 6 cards.
+xxXBLUESINXxx ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Professor's Research.
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Ultra Ball.
+- SpaghettiEd discarded 2 cards.
+   • Cleffa, Air Balloon
+- SpaghettiEd drew Wugtrio.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd evolved Wiglett to Wugtrio on the Bench.
+SpaghettiEd evolved Dreepy to Drakloak on the Bench.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Sacred Ash.
+SpaghettiEd played Sacred Ash.
+- SpaghettiEd shuffled 5 cards into their deck.
+   • Wiglett, Wugtrio, Dreepy, Drakloak, Dreepy
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Xerosic's Machinations.
+SpaghettiEd played Xerosic's Machinations.
+- SpaghettiEd discarded 3 cards.
+   • Basic Water Energy, Basic Water Energy, Nest Ball
+SpaghettiEd played Artazon.
+- SpaghettiEd drew Wiglett and played it to the Bench.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 0 landed on heads.
+
+[playerName]'s Turn
+xxXBLUESINXxx drew a card.
+xxXBLUESINXxx attached Basic Water Energy to Kingdra in the Active Spot.
+xxXBLUESINXxx retreated Kingdra to the Bench.
+- 2 cards were discarded from xxXBLUESINXxx's Kingdra.
+   • Basic Water Energy, Basic Water Energy
+xxXBLUESINXxx's Kyogre is now in the Active Spot.
+xxXBLUESINXxx's Kyogre used Riptide on SpaghettiEd’s Wugtrio for 120 damage.
+- Damage breakdown:
+   • 6 attached Energy: 120 damage
+
+- xxXBLUESINXxx shuffled 6 cards into their deck.
+   • Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy
+SpaghettiEd's Wugtrio was Knocked Out!
+- 3 cards were discarded from SpaghettiEd's Wugtrio.
+   • Reversal Energy, Wiglett, Gravity Gemstone
+xxXBLUESINXxx took a Prize card.
+A card was added to xxXBLUESINXxx's hand.
+SpaghettiEd's Wugtrio is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Dreepy.
+SpaghettiEd played Dreepy to the Bench.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Artazon.
+SpaghettiEd's Drakloak used Recon Directive.
+- SpaghettiEd drew Drakloak.
+SpaghettiEd's Wugtrio used Undersea Tunnel.
+- SpaghettiEd flipped 3 coins, and 3 landed on heads.
+- SpaghettiEd moved SpaghettiEd's 9 cards to the discard pile.
+   • Basic Water Energy, Basic Water Energy, Basic Water Energy, Mega Froslass ex, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy, Basic Water Energy
+
+[playerName]'s Turn
+Opponent's deck ran out of cards. SpaghettiEd wins.
+
