@@ -171,6 +171,7 @@ export function extractCardsFromEvents(
 
 /**
  * Add or update a card in the extraction map
+ * Caps card counts at 4 (except for basic energy which can have unlimited copies)
  */
 function addOrUpdateCard(
   cardMap: Map<string, ExtractedCard>,
@@ -182,7 +183,13 @@ function addOrUpdateCard(
 ): void {
   const existing = cardMap.get(name)
   if (existing) {
-    existing.count++
+    // Cap at 4 copies unless it's basic energy (unlimited in Pokemon TCG)
+    const isBasicEnergyCard = category === 'energy' && subcategory === 'basic'
+    const maxCount = isBasicEnergyCard ? Infinity : 4
+    
+    if (existing.count < maxCount) {
+      existing.count++
+    }
     // Keep the most specific subcategory
     if (subcategory && !existing.subcategory) {
       existing.subcategory = subcategory

@@ -272,7 +272,7 @@ interface EvolutionLine {
 
 ### Property 2: Card Count Accuracy
 
-*For any* reconstructed deck, the count for each card SHALL equal the number of distinct instances of that card observed across all events, where a card played, evolved, and knocked out counts as one instance.
+*For any* reconstructed deck, the count for each card SHALL equal the number of distinct instances of that card observed across all events, where a card played, evolved, and knocked out counts as one instance, and SHALL be capped at 4 copies for all cards except Basic Energy (which has no limit per Pokemon TCG rules).
 
 **Validates: Requirements 2.1, 2.2**
 
@@ -331,6 +331,14 @@ interface EvolutionLine {
 **Validates: Requirements 7.2, 7.4**
 
 ## Error Handling
+
+### Pattern Matching Safeguards
+
+To prevent false positives in card extraction, the following safeguards are implemented:
+
+1. **Card name patterns require capital letters**: Patterns like `drewCard` and `playedPokemon` require card names to start with a capital letter (e.g., `[A-Z]`), preventing extraction of generic phrases like "a card" or "to the bench"
+2. **Card count limits**: All cards except Basic Energy are capped at 4 copies per deck, following Pokemon TCG rules
+3. **Skip patterns for metadata**: Lines containing metadata (damage breakdowns, shuffle notifications, etc.) are explicitly skipped during parsing
 
 ### API Errors
 

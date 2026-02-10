@@ -17,11 +17,11 @@ export const PATTERNS = {
   turnStart: /^\[playerName\]'s Turn$/,
 
   // Draw actions
-  drewCard: /^(\w+) drew ([^.]+)\.?$/,
+  drewCard: /^(\w+) drew ([A-Z][^.]+)\.?$/, // Must start with capital letter to avoid "a card"
   drewCards: /^(\w+) drew (\d+) cards/,
 
   // Pokemon actions
-  playedPokemon: /^(\w+) played (.+?) to the (Active Spot|Bench)/,
+  playedPokemon: /^(\w+) played ([A-Z][^.]+?) to the (Active Spot|Bench)/, // Must start with capital letter
   evolved: /^(\w+) evolved (.+?) to (.+?)(?:(?: in the Active Spot| on the Bench)?\.?)?$/,
   switchedIn: /^(\w+)['\u2019]s (.+?) is now in the Active Spot/,
 
