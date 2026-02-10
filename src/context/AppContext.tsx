@@ -5,9 +5,11 @@
  */
 
 import { createContext, useReducer, useCallback, type ReactNode } from 'react'
-import type { AppState, MatchData, PokemonSprite } from '../types'
+import type { AppState, MatchData, PokemonSprite, PlayerDecks, CardData } from '../types'
 import { parseLog } from '../parser'
 import { fetchSprites as fetchSpritesFromApi, type SpriteResult } from '../api/pokeApiService'
+import { reconstructDecks } from '../services/deckReconstructor'
+import { fetchCards } from '../api/cardFetcher'
 
 /**
  * Action types for state transitions
@@ -22,6 +24,13 @@ type AppAction =
   | { type: 'FETCH_SPRITES_SUCCESS'; payload: Map<string, PokemonSprite> }
   | { type: 'FETCH_SPRITES_ERROR'; payload: string }
   | { type: 'SET_VIEW'; payload: 'input' | 'results' }
+  | { type: 'RECONSTRUCT_DECKS_START' }
+  | { type: 'RECONSTRUCT_DECKS_SUCCESS'; payload: PlayerDecks }
+  | { type: 'RECONSTRUCT_DECKS_ERROR'; payload: string }
+  | { type: 'FETCH_CARD_IMAGES_START'; payload: string[] }
+  | { type: 'FETCH_CARD_IMAGE_SUCCESS'; payload: { cardName: string; cardData: CardData } }
+  | { type: 'FETCH_CARD_IMAGES_SUCCESS'; payload: Map<string, CardData> }
+  | { type: 'FETCH_CARD_IMAGES_ERROR'; payload: { cardName: string; error: string } }
 
 /**
  * Context value interface with state and actions
@@ -33,6 +42,8 @@ export interface AppContextValue {
   fetchSprites: (pokemonNames: string[]) => Promise<void>
   setView: (view: 'input' | 'results') => void
   setRawLog: (log: string) => void
+  reconstructDecks: (matchData: MatchData) => void
+  fetchCardImages: (cardNames: string[]) => Promise<void>
 }
 
 /**
@@ -45,6 +56,11 @@ const initialState: AppState = {
   sprites: new Map(),
   isLoading: false,
   error: null,
+  deckAnalysis: {
+    playerDecks: null,
+    cardData: new Map(),
+    errors: [],
+  },
 }
 
 /**
@@ -113,6 +129,111 @@ function appReducer(state: AppState, action: AppAction): AppState {
         ...state,
         view: action.payload,
       }
+
+    case 'RECONSTRUCT_DECKS_START':
+      return {
+        ...state,
+        isLoading: true,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          errors: [],
+        },
+      }
+
+    case 'RECONSTRUCT_DECKS_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          playerDecks: action.payload,
+        },
+      }
+
+    case 'RECONSTRUCT_DECKS_ERROR':
+      return {
+        ...state,
+        isLoading: false,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          errors: [...state.deckAnalysis.errors, action.payload],
+        },
+      }
+
+    case 'FETCH_CARD_IMAGES_START': {
+      // Mark cards as loading
+      const loadingCardData = new Map(state.deckAnalysis.cardData)
+      action.payload.forEach((cardName) => {
+        if (!loadingCardData.has(cardName)) {
+          loadingCardData.set(cardName, {
+            data: null,
+            isLoading: true,
+            error: null,
+          })
+        }
+      })
+      return {
+        ...state,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          cardData: loadingCardData,
+        },
+      }
+    }
+
+    case 'FETCH_CARD_IMAGE_SUCCESS': {
+      // Update single card data as it loads
+      const updatedCardData = new Map(state.deckAnalysis.cardData)
+      updatedCardData.set(action.payload.cardName, {
+        data: action.payload.cardData,
+        isLoading: false,
+        error: null,
+      })
+      return {
+        ...state,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          cardData: updatedCardData,
+        },
+      }
+    }
+
+    case 'FETCH_CARD_IMAGES_SUCCESS': {
+      // Update card data with fetched results
+      const updatedCardData = new Map(state.deckAnalysis.cardData)
+      action.payload.forEach((cardData, cardName) => {
+        updatedCardData.set(cardName, {
+          data: cardData,
+          isLoading: false,
+          error: null,
+        })
+      })
+      return {
+        ...state,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          cardData: updatedCardData,
+        },
+      }
+    }
+
+    case 'FETCH_CARD_IMAGES_ERROR': {
+      // Mark specific card as errored
+      const errorCardData = new Map(state.deckAnalysis.cardData)
+      errorCardData.set(action.payload.cardName, {
+        data: null,
+        isLoading: false,
+        error: action.payload.error,
+      })
+      return {
+        ...state,
+        deckAnalysis: {
+          ...state.deckAnalysis,
+          cardData: errorCardData,
+          errors: [...state.deckAnalysis.errors, action.payload.error],
+        },
+      }
+    }
 
     default:
       return state
@@ -227,6 +348,52 @@ export function AppProvider({ children }: AppProviderProps) {
     dispatch({ type: 'SET_RAW_LOG', payload: log })
   }, [])
 
+  /**
+   * Reconstruct decks from match data
+   */
+  const reconstructDecksAction = useCallback((matchData: MatchData) => {
+    dispatch({ type: 'RECONSTRUCT_DECKS_START' })
+
+    try {
+      const playerDecks = reconstructDecks(matchData)
+      dispatch({ type: 'RECONSTRUCT_DECKS_SUCCESS', payload: playerDecks })
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to reconstruct decks'
+      dispatch({ type: 'RECONSTRUCT_DECKS_ERROR', payload: errorMessage })
+    }
+  }, [])
+
+  /**
+   * Fetch card images for deck analysis
+   */
+  const fetchCardImages = useCallback(async (cardNames: string[]) => {
+    if (cardNames.length === 0) return
+
+    dispatch({ type: 'FETCH_CARD_IMAGES_START', payload: cardNames })
+
+    try {
+      // Fetch cards with callback for progressive updates
+      await fetchCards(cardNames, (cardName, cardData) => {
+        // Dispatch individual card success as it loads
+        dispatch({
+          type: 'FETCH_CARD_IMAGE_SUCCESS',
+          payload: { cardName, cardData },
+        })
+      })
+      
+      // Final success action (optional, for completion tracking)
+      // The individual updates have already been dispatched
+    } catch (error) {
+      console.error('[AppContext] Error fetching cards:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch card images'
+      // For batch errors, we'll just log a general error
+      dispatch({
+        type: 'FETCH_CARD_IMAGES_ERROR',
+        payload: { cardName: 'batch', error: errorMessage },
+      })
+    }
+  }, [])
+
   const value: AppContextValue = {
     state,
     submitLog,
@@ -234,6 +401,8 @@ export function AppProvider({ children }: AppProviderProps) {
     fetchSprites,
     setView,
     setRawLog,
+    reconstructDecks: reconstructDecksAction,
+    fetchCardImages,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

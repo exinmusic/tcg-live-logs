@@ -13,6 +13,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\""
   },
   "dependencies": {
+    "pokemon-tcg-sdk-typescript": "^1.3.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

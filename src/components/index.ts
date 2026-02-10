@@ -33,3 +33,15 @@ export { ErrorBoundary } from './ErrorBoundary'
 
 export { LoadingSpinner } from './LoadingSpinner'
 export type { LoadingSpinnerProps } from './LoadingSpinner'
+
+export { DeckCardDisplay } from './DeckCardDisplay'
+export type { DeckCardDisplayProps } from './DeckCardDisplay'
+
+export { DeckCategorySection } from './DeckCategorySection'
+export type { DeckCategorySectionProps } from './DeckCategorySection'
+
+export { PlayerDeckCard } from './PlayerDeckCard'
+export type { PlayerDeckCardProps } from './PlayerDeckCard'
+
+export { DeckAnalysisView } from './DeckAnalysisView'
+export type { DeckAnalysisViewProps } from './DeckAnalysisView'

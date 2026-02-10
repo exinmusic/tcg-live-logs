@@ -1,0 +1,215 @@
+/**
+ * DeckAnalysisView Styles
+ * Requirements: 5.2
+ */
+
+.deck-analysis-view {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+/* Header */
+.deck-analysis-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.deck-analysis-title {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.deck-disclaimer {
+  margin: 0 0 var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+/* Banners */
+.loading-banner,
+.error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.loading-banner {
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+
+.error-banner {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+.loading-icon,
+.error-icon {
+  font-size: var(--font-size-lg);
+}
+
+.loading-message {
+  text-align: center;
+  padding: var(--spacing-xl);
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+}
+
+/* Deck comparison - two column layout */
+.deck-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+/* Player deck card */
+.player-deck-card {
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deck-header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-primary);
+}
+
+.player-name {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.deck-summary {
+  display: flex;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.summary-item strong {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Deck categories */
+.deck-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.deck-category-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.category-header {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.category-count {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-tertiary);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+/* Deck breakdown */
+.deck-breakdown {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: space-around;
+  gap: var(--spacing-md);
+}
+
+.breakdown-item {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.breakdown-item strong {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .deck-comparison {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .deck-analysis-view {
+    padding: var(--spacing-sm);
+  }
+
+  .deck-analysis-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .player-deck-card {
+    padding: var(--spacing-md);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: var(--spacing-xs);
+  }
+
+  .deck-breakdown {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .deck-analysis-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .player-name {
+    font-size: var(--font-size-lg);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}

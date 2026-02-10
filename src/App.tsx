@@ -6,7 +6,7 @@
  * Requirements: 6.5, 6.6
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AppProvider } from './context/AppContext'
 import { useApp } from './context/useApp'
 import {
@@ -14,19 +14,40 @@ import {
   LogInputForm,
   TimelineView,
   StatisticsView,
+  DeckAnalysisView,
   ErrorBoundary,
   LoadingSpinner,
 } from './components'
 import './App.css'
 
-type ResultsTab = 'timeline' | 'statistics'
+type ResultsTab = 'timeline' | 'statistics' | 'deck-analysis'
 
 /**
  * Inner App component that uses the context
  */
 function AppContent() {
-  const { state, submitLog, clearLog, setView } = useApp()
+  const { state, submitLog, clearLog, setView, reconstructDecks, fetchCardImages } = useApp()
   const [activeTab, setActiveTab] = useState<ResultsTab>('timeline')
+
+  // Trigger deck reconstruction when switching to deck-analysis tab
+  useEffect(() => {
+    if (activeTab === 'deck-analysis' && state.matchData && !state.deckAnalysis.playerDecks) {
+      reconstructDecks(state.matchData)
+    }
+
+    // Fetch card images after decks are reconstructed
+    if (activeTab === 'deck-analysis' && state.deckAnalysis.playerDecks) {
+      const cardNames = new Set<string>()
+      Object.values(state.deckAnalysis.playerDecks).forEach((deck) => {
+        deck.cards.forEach((card) => cardNames.add(card.name))
+      })
+
+      // Fetch card images
+      if (cardNames.size > 0) {
+        fetchCardImages(Array.from(cardNames))
+      }
+    }
+  }, [activeTab, state.matchData, state.deckAnalysis.playerDecks, reconstructDecks, fetchCardImages])
 
   const handleSubmit = async (logText: string) => {
     await submitLog(logText)
@@ -83,6 +104,13 @@ function AppContent() {
               >
                 Statistics
               </button>
+              <button
+                className={`toggle-btn ${activeTab === 'deck-analysis' ? 'toggle-btn--active' : ''}`}
+                onClick={() => setActiveTab('deck-analysis')}
+                aria-pressed={activeTab === 'deck-analysis'}
+              >
+                Deck Analysis
+              </button>
             </div>
 
             {activeTab === 'timeline' && (
@@ -96,6 +124,15 @@ function AppContent() {
               <StatisticsView
                 matchData={state.matchData}
                 sprites={state.sprites}
+              />
+            )}
+
+            {activeTab === 'deck-analysis' && (
+              <DeckAnalysisView
+                matchData={state.matchData}
+                playerDecks={state.deckAnalysis.playerDecks}
+                cardData={state.deckAnalysis.cardData}
+                errors={state.deckAnalysis.errors}
               />
             )}
           </div>

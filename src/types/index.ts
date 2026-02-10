@@ -1,4 +1,5 @@
 import type { EventType, EventDetails, TrainerCategory, WinCondition } from './events'
+import type { PlayerDecks, CardFetchState } from './deck'
 
 // Re-export event types
 export type { EventType, EventDetails, TrainerCategory, WinCondition }
@@ -109,6 +110,11 @@ export interface AppState {
   sprites: Map<string, PokemonSprite>
   isLoading: boolean
   error: string | null
+  deckAnalysis: {
+    playerDecks: PlayerDecks | null
+    cardData: Map<string, CardFetchState>
+    errors: string[]
+  }
 }
 
 /**
