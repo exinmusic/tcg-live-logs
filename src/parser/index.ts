@@ -49,8 +49,7 @@ export function parseLog(logText: string): ParseResult {
   const { players, coinFlipWinner, coinFlipChoice, events: setupEvents, pokemonInMatch: setupPokemon, setupEndIndex } = setupResult
 
   // Parse turns and events
-  const playerNames: [string, string] = [players[0].username, players[1].username]
-  const turnResult = parseTurns(lines, setupEndIndex, playerNames)
+  const turnResult = parseTurns(lines, setupEndIndex, players)
 
   // Validate we found turns
   if (turnResult.turns.length === 0) {
@@ -67,6 +66,7 @@ export function parseLog(logText: string): ParseResult {
   const allEvents = [...setupEvents, ...turnResult.events]
 
   // Calculate statistics using the statistics module
+  const playerNames: [string, string] = [players[0].username, players[1].username]
   const statistics = calculateStatistics(allEvents, playerNames)
 
   // Determine winner

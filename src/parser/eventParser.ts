@@ -2,7 +2,7 @@
  * Parser for turn-by-turn events in Pokemon TCG Live game logs
  */
 
-import type { GameEvent, Turn, EventDetails, WinCondition } from '../types'
+import type { GameEvent, Turn, EventDetails, WinCondition, Player } from '../types'
 import { PATTERNS } from './patterns'
 import { getTrainerCategory } from './trainerCategories'
 import {
@@ -27,7 +27,7 @@ export interface TurnParseResult {
 export function parseTurns(
   lines: string[],
   startIndex: number,
-  players: [string, string]
+  players: [Player, Player]
 ): TurnParseResult {
   const turns: Turn[] = []
   const allEvents: GameEvent[] = []
@@ -38,7 +38,13 @@ export function parseTurns(
   let currentTurn: Turn | null = null
   let turnNumber = 0
   let timestamp = 0
-  let currentPlayer = players.find((p) => p) || players[0] // Start with first player
+  
+  // Determine which player goes first
+  const firstPlayer = players.find(p => p.isFirst) || players[0]
+  const secondPlayer = players.find(p => !p.isFirst) || players[1]
+  const orderedPlayers = [firstPlayer.username, secondPlayer.username]
+  
+  let currentPlayer = orderedPlayers[0]
   let lastDamageBreakdown: string | null = null
 
   // Track which player's turn it is by alternating
@@ -56,7 +62,7 @@ export function parseTurns(
 
       turnNumber++
       // Alternate between players
-      currentPlayer = players[turnPlayerIndex % 2]
+      currentPlayer = orderedPlayers[turnPlayerIndex % 2]
       turnPlayerIndex++
 
       currentTurn = {
@@ -131,7 +137,7 @@ export function parseTurns(
       const knockedOutPlayer = knockoutMatch[1]
       const knockedOutPokemon = knockoutMatch[2]
       // The OTHER player caused the knockout
-      const causingPlayer = players.find((p) => p !== knockedOutPlayer) || currentPlayer
+      const causingPlayer = orderedPlayers.find((p) => p !== knockedOutPlayer) || currentPlayer
 
       event = createKnockoutEvent(
         causingPlayer,
@@ -204,22 +210,7 @@ export function parseTurns(
       )
     }
 
-    // Parse trainer played (must come after stadium check)
-    const trainerMatch = matchLine(line, PATTERNS.playedTrainer)
-    if (!event && trainerMatch) {
-      const trainerPlayer = trainerMatch[1]
-      const trainerName = trainerMatch[2].trim()
-      const category = getTrainerCategory(trainerName)
-      event = createTrainerEvent(
-        trainerPlayer,
-        trainerName,
-        category,
-        turnNumber,
-        timestamp++
-      )
-    }
-
-    // Parse Pokemon played
+    // Parse Pokemon played (must come before trainer check to avoid false matches)
     const playPokemonMatch = matchLine(line, PATTERNS.playedPokemon)
     if (!event && playPokemonMatch) {
       const playPlayer = playPokemonMatch[1]
@@ -230,6 +221,21 @@ export function parseTurns(
         playPlayer,
         pokemonName,
         location,
+        turnNumber,
+        timestamp++
+      )
+    }
+
+    // Parse trainer played (must come after stadium and Pokemon checks)
+    const trainerMatch = matchLine(line, PATTERNS.playedTrainer)
+    if (!event && trainerMatch) {
+      const trainerPlayer = trainerMatch[1]
+      const trainerName = trainerMatch[2].trim()
+      const category = getTrainerCategory(trainerName)
+      event = createTrainerEvent(
+        trainerPlayer,
+        trainerName,
+        category,
         turnNumber,
         timestamp++
       )
@@ -280,7 +286,11 @@ export function parseTurns(
     if (!event && drewCardsMatch) {
       const drawPlayer = drewCardsMatch[1]
       const cardCount = parseInt(drewCardsMatch[2], 10)
-      event = createDrawEvent(drawPlayer, cardCount, undefined, turnNumber, timestamp++)
+      
+      // Look ahead for bullet points with card names
+      const cardNames = lookAheadForCardNames(lines, i)
+      
+      event = createDrawEvent(drawPlayer, cardCount, cardNames, turnNumber, timestamp++)
     }
 
     // Parse coin flip
@@ -316,6 +326,32 @@ export function parseTurns(
     winner,
     winCondition,
   }
+}
+
+/**
+ * Look ahead in the lines array for bullet points containing card names
+ * Returns undefined if no card names are found
+ */
+function lookAheadForCardNames(lines: string[], currentIndex: number): string[] | undefined {
+  const cardNames: string[] = []
+  
+  // Look at the next few lines for bullet points
+  for (let j = currentIndex + 1; j < Math.min(currentIndex + 5, lines.length); j++) {
+    const nextLine = lines[j]
+    
+    // Check if it's a bullet point with card names
+    const cardListMatch = nextLine.match(/^[ ]{3}• (.+)$/)
+    if (cardListMatch) {
+      // Split by comma to get individual card names
+      const names = cardListMatch[1].split(',').map(name => name.trim())
+      cardNames.push(...names)
+    } else if (!shouldSkipLine(nextLine) && nextLine.trim() !== '') {
+      // Stop if we hit a non-skip, non-empty line that's not a bullet point
+      break
+    }
+  }
+  
+  return cardNames.length > 0 ? cardNames : undefined
 }
 
 function addPokemonIfNew(list: string[], pokemon: string): void {

@@ -187,7 +187,7 @@ describe('DeckReconstructor', () => {
       const events: GameEvent[] = [
         {
           id: '1',
-          turn: 1,
+          turn: 0,
           player: 'Player1',
           type: 'play_pokemon',
           description: 'Player1 played Pikachu to the Active Spot',
@@ -196,7 +196,7 @@ describe('DeckReconstructor', () => {
         },
         {
           id: '2',
-          turn: 1,
+          turn: 0,
           player: 'Player1',
           type: 'play_pokemon',
           description: 'Player1 played Pikachu to the Bench',
@@ -213,7 +213,7 @@ describe('DeckReconstructor', () => {
       const events: GameEvent[] = [
         {
           id: '1',
-          turn: 1,
+          turn: 0,
           player: 'Player1',
           type: 'play_pokemon',
           description: 'Player1 played Pikachu',
@@ -222,7 +222,7 @@ describe('DeckReconstructor', () => {
         },
         {
           id: '2',
-          turn: 1,
+          turn: 0,
           player: 'Player2',
           type: 'play_pokemon',
           description: 'Player2 played Charmander',

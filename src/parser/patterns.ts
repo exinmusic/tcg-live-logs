@@ -65,6 +65,7 @@ export const SKIP_PATTERNS = [
   /^- \d+ drawn cards/,
   /^- Cards revealed from Mulligan/,
   /^- .+ drew a card\.$/,
+  /^- .+ drew .+ and played/,  // Skip "drew X and played it to the Bench" metadata lines
   /^A card was added to .+['\u2019]s hand/,
   /^- .+ shuffled/,
   /^- .+ put \d+ cards/,

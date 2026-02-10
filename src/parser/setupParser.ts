@@ -100,7 +100,10 @@ export function parseSetup(lines: string[]): SetupParseResult {
       if (!player1) player1 = playerName
       else if (playerName !== player1 && !player2) player2 = playerName
 
-      events.push(createDrawEvent(playerName, cardCount, 0, timestamp++))
+      // Look ahead for bullet points with card names
+      const cardNames = lookAheadForCardNames(lines, i)
+
+      events.push(createDrawEvent(playerName, cardCount, cardNames, 0, timestamp++))
       continue
     }
 
@@ -117,7 +120,11 @@ export function parseSetup(lines: string[]): SetupParseResult {
     if (mulliganDrawMatch) {
       const playerName = mulliganDrawMatch[1]
       const cardCount = parseInt(mulliganDrawMatch[2], 10)
-      events.push(createDrawEvent(playerName, cardCount, 0, timestamp++))
+      
+      // Look ahead for bullet points with card names
+      const cardNames = lookAheadForCardNames(lines, i)
+      
+      events.push(createDrawEvent(playerName, cardCount, cardNames, 0, timestamp++))
       continue
     }
 
@@ -169,13 +176,46 @@ export function parseSetup(lines: string[]): SetupParseResult {
   }
 }
 
+/**
+ * Look ahead in the lines array for bullet points containing card names
+ * Returns undefined if no card names are found
+ */
+function lookAheadForCardNames(lines: string[], currentIndex: number): string[] | undefined {
+  const cardNames: string[] = []
+  
+  // Look at the next few lines for bullet points
+  for (let j = currentIndex + 1; j < Math.min(currentIndex + 5, lines.length); j++) {
+    const nextLine = lines[j]
+    
+    // Check if it's a bullet point with card names
+    const cardListMatch = nextLine.match(/^[ ]{3}• (.+)$/)
+    if (cardListMatch) {
+      // Split by comma to get individual card names
+      const names = cardListMatch[1].split(',').map(name => name.trim())
+      cardNames.push(...names)
+    } else if (nextLine.startsWith('-') || nextLine.trim() === '') {
+      // Continue through metadata lines
+      continue
+    } else {
+      // Stop if we hit a non-metadata line
+      break
+    }
+  }
+  
+  return cardNames.length > 0 ? cardNames : undefined
+}
+
 function createDrawEvent(
   player: string,
   cardCount: number,
+  cardNames: string[] | undefined,
   turn: number,
   timestamp: number
 ): GameEvent {
   const details: EventDetails = { cardCount }
+  if (cardNames) {
+    details.cardNames = cardNames
+  }
   return {
     id: generateEventId(),
     turn,

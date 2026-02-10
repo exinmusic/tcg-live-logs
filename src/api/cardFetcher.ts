@@ -3,6 +3,14 @@
  * Handles fetching card data with caching and rate limiting
  */
 
+// Set up process.env polyfill for browser before importing SDK
+if (typeof process === 'undefined') {
+  // @ts-expect-error - Polyfill for browser environment
+  globalThis.process = { env: {} }
+}
+// @ts-expect-error - Setting env var for SDK
+process.env.POKEMONTCG_API_KEY = '3e03e81c-e00e-4c9b-833c-cccdcd83c5c2'
+
 import * as PokemonTCG from 'pokemon-tcg-sdk-typescript'
 import type { Card } from 'pokemon-tcg-sdk-typescript/dist/interfaces/card'
 import type { CardData } from '../types/deck'
@@ -10,8 +18,47 @@ import type { CardData } from '../types/deck'
 // In-memory cache for card data
 const cardCache = new Map<string, CardData>()
 
-// Rate limiting configuration (30 requests/minute without API key)
-const RATE_LIMIT_DELAY_MS = 2000 // 2 seconds between requests
+// LocalStorage key for persistent cache
+const CACHE_STORAGE_KEY = 'pokemon-tcg-card-cache'
+const CACHE_VERSION = 1
+
+// Load cache from localStorage on initialization
+function loadCacheFromStorage(): void {
+  try {
+    const stored = localStorage.getItem(CACHE_STORAGE_KEY)
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      if (parsed.version === CACHE_VERSION && Array.isArray(parsed.data)) {
+        parsed.data.forEach(([key, value]: [string, CardData]) => {
+          cardCache.set(key, value)
+        })
+        console.log(`[CardFetcher] Loaded ${cardCache.size} cards from cache`)
+      }
+    }
+  } catch (error) {
+    console.warn('[CardFetcher] Failed to load cache from storage:', error)
+  }
+}
+
+// Save cache to localStorage
+function saveCacheToStorage(): void {
+  try {
+    const data = Array.from(cardCache.entries())
+    localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify({
+      version: CACHE_VERSION,
+      data
+    }))
+  } catch (error) {
+    console.warn('[CardFetcher] Failed to save cache to storage:', error)
+  }
+}
+
+// Initialize cache from storage
+loadCacheFromStorage()
+
+// Rate limiting configuration (with API key: 20,000 requests/day)
+const RATE_LIMIT_DELAY_MS = 100 // Minimal delay with API key
+const BATCH_SIZE = 10 // Fetch up to 10 cards per API request
 let lastRequestTime = 0
 
 // Request queue for batch fetches
@@ -89,6 +136,74 @@ async function waitForRateLimit(): Promise<void> {
 }
 
 /**
+ * Fetches multiple cards in a single batch request
+ * @param cardNames - Array of card names to fetch
+ * @returns Map of card name to CardData
+ */
+async function fetchCardBatch(cardNames: string[]): Promise<Map<string, CardData>> {
+  const results = new Map<string, CardData>()
+  
+  if (cardNames.length === 0) {
+    return results
+  }
+
+  try {
+    // Wait for rate limit
+    await waitForRateLimit()
+
+    // Build query for multiple cards: name:"Pikachu" OR name:"Charizard"
+    const query = cardNames.map(name => `name:"${name}"`).join(' OR ')
+    
+    // Query API with batch query
+    const cards = await PokemonTCG.PokemonTCG.findCardsByQueries({ q: query })
+
+    // Group cards by name
+    const cardsByName = new Map<string, Card[]>()
+    if (cards && cards.length > 0) {
+      cards.forEach(card => {
+        const existing = cardsByName.get(card.name) || []
+        existing.push(card)
+        cardsByName.set(card.name, existing)
+      })
+    }
+
+    // Process each requested card
+    cardNames.forEach(cardName => {
+      const matchingCards = cardsByName.get(cardName)
+      
+      if (!matchingCards || matchingCards.length === 0) {
+        // Return placeholder for cards not found
+        const placeholder = createPlaceholder(cardName)
+        cardCache.set(cardName, placeholder)
+        results.set(cardName, placeholder)
+      } else {
+        // Select most recent version
+        const selectedCard = selectMostRecentCard(matchingCards)
+        const cardData = convertToCardData(selectedCard)
+        
+        // Store in cache
+        cardCache.set(cardName, cardData)
+        results.set(cardName, cardData)
+      }
+    })
+
+    // Save updated cache to localStorage
+    saveCacheToStorage()
+
+    return results
+  } catch (error) {
+    // On error, return placeholders for all cards
+    console.error('[CardFetcher] Error fetching card batch:', error)
+    cardNames.forEach(cardName => {
+      const placeholder = createPlaceholder(cardName)
+      cardCache.set(cardName, placeholder)
+      results.set(cardName, placeholder)
+    })
+    return results
+  }
+}
+
+/**
  * Fetches a single card by name from the Pokemon TCG API
  * Uses caching to avoid redundant API calls
  * @param cardName - Name of the card to fetch
@@ -101,39 +216,13 @@ export async function fetchCard(cardName: string): Promise<CardData> {
     return cached
   }
 
-  try {
-    // Wait for rate limit
-    await waitForRateLimit()
-
-    // Query API by card name
-    const cards = await PokemonTCG.PokemonTCG.findCardsByQueries({ q: `name:"${cardName}"` })
-
-    if (!cards || cards.length === 0) {
-      // Return placeholder for cards not found
-      const placeholder = createPlaceholder(cardName)
-      cardCache.set(cardName, placeholder)
-      return placeholder
-    }
-
-    // Select most recent version
-    const selectedCard = selectMostRecentCard(cards)
-    const cardData = convertToCardData(selectedCard)
-
-    // Store in cache
-    cardCache.set(cardName, cardData)
-
-    return cardData
-  } catch (error) {
-    // On error, return placeholder and cache it
-    console.error('[CardFetcher] Error fetching card:', cardName, error)
-    const placeholder = createPlaceholder(cardName)
-    cardCache.set(cardName, placeholder)
-    return placeholder
-  }
+  // Use batch fetch for single card
+  const results = await fetchCardBatch([cardName])
+  return results.get(cardName) || createPlaceholder(cardName)
 }
 
 /**
- * Processes the request queue sequentially with rate limiting
+ * Processes the request queue in batches with rate limiting
  */
 async function processQueue(): Promise<void> {
   if (isProcessingQueue || requestQueue.length === 0) {
@@ -143,14 +232,27 @@ async function processQueue(): Promise<void> {
   isProcessingQueue = true
 
   while (requestQueue.length > 0) {
-    const request = requestQueue.shift()
-    if (!request) continue
+    // Take a batch of requests
+    const batch = requestQueue.splice(0, BATCH_SIZE)
+    const cardNames = batch.map(req => req.cardName)
 
     try {
-      const cardData = await fetchCard(request.cardName)
-      request.resolve(cardData)
+      const results = await fetchCardBatch(cardNames)
+      
+      // Resolve each request with its result
+      batch.forEach(request => {
+        const cardData = results.get(request.cardName)
+        if (cardData) {
+          request.resolve(cardData)
+        } else {
+          request.resolve(createPlaceholder(request.cardName))
+        }
+      })
     } catch (error) {
-      request.reject(error instanceof Error ? error : new Error(String(error)))
+      // Reject all requests in the batch
+      batch.forEach(request => {
+        request.reject(error instanceof Error ? error : new Error(String(error)))
+      })
     }
   }
 
@@ -207,6 +309,11 @@ export async function fetchCards(
  */
 export function clearCardCache(): void {
   cardCache.clear()
+  try {
+    localStorage.removeItem(CACHE_STORAGE_KEY)
+  } catch (error) {
+    console.warn('[CardFetcher] Failed to clear cache from storage:', error)
+  }
 }
 
 /**
