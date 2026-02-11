@@ -19,3 +19,10 @@ export {
   isCardInCache,
   getCardFromCache,
 } from './cardFetcher';
+export {
+  getLocalCardImage,
+  getAllLocalCardImages,
+  hasLocalCardImage,
+  getManifestStats,
+  preloadManifest,
+} from './localCardImages';

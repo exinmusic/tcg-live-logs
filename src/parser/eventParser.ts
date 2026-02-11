@@ -105,6 +105,22 @@ export function parseTurns(
       event = createWinEvent(winner, winCondition, turnNumber, timestamp++)
     }
 
+    const concedeWithWinnerMatch = matchLine(line, PATTERNS.concedeWithWinner)
+    if (!event && concedeWithWinnerMatch) {
+      winner = concedeWithWinnerMatch[1]
+      winCondition = 'concede'
+      event = createWinEvent(winner, winCondition, turnNumber, timestamp++)
+    }
+
+    const concedeMatch = matchLine(line, PATTERNS.concede)
+    if (!event && concedeMatch) {
+      const conceder = concedeMatch[1]
+      // Winner is the other player
+      winner = orderedPlayers.find((p) => p !== conceder) || currentPlayer
+      winCondition = 'concede'
+      event = createWinEvent(winner, winCondition, turnNumber, timestamp++)
+    }
+
     // Parse attack
     const attackMatch = matchLine(line, PATTERNS.attack)
     if (!event && attackMatch) {

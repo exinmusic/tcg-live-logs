@@ -166,4 +166,62 @@ describe('Log Parser', () => {
       expect(result.error).toContain('Could not identify players')
     })
   })
+
+  describe('Win condition detection', () => {
+    it('should detect winner from "You conceded. Winner wins." format', () => {
+      const concedeLog = `Setup
+Player1 chose heads for the opening coin flip.
+Player1 won the coin toss.
+Player1 decided to go first.
+Player1 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player2 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player1 played Pikachu to the Active Spot.
+Player2 played Charmander to the Active Spot.
+
+[playerName]'s Turn
+Player1 drew a card.
+Player1 ended their turn.
+
+[playerName]'s Turn
+Player2 drew a card.
+You conceded. Player2 wins.`
+
+      const result = parseLog(concedeLog)
+      expect(result.success).toBe(true)
+      if (!result.success) return
+
+      expect(result.data.winner).toBe('Player2')
+      expect(result.data.winCondition).toBe('concede')
+    })
+
+    it('should detect winner from "PlayerName conceded" format', () => {
+      const concedeLog = `Setup
+Player1 chose heads for the opening coin flip.
+Player1 won the coin toss.
+Player1 decided to go first.
+Player1 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player2 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player1 played Pikachu to the Active Spot.
+Player2 played Charmander to the Active Spot.
+
+[playerName]'s Turn
+Player1 drew a card.
+Player1 ended their turn.
+
+[playerName]'s Turn
+Player2 drew a card.
+Player1 conceded`
+
+      const result = parseLog(concedeLog)
+      expect(result.success).toBe(true)
+      if (!result.success) return
+
+      expect(result.data.winner).toBe('Player2')
+      expect(result.data.winCondition).toBe('concede')
+    })
+  })
 })

@@ -39,7 +39,13 @@ function AppContent() {
     if (activeTab === 'deck-analysis' && state.deckAnalysis.playerDecks) {
       const cardNames = new Set<string>()
       Object.values(state.deckAnalysis.playerDecks).forEach((deck) => {
-        deck.cards.forEach((card) => cardNames.add(card.name))
+        deck.pokemon.forEach((card) => cardNames.add(card.name))
+        deck.trainers.supporters.forEach((card) => cardNames.add(card.name))
+        deck.trainers.items.forEach((card) => cardNames.add(card.name))
+        deck.trainers.tools.forEach((card) => cardNames.add(card.name))
+        deck.trainers.stadiums.forEach((card) => cardNames.add(card.name))
+        deck.energy.basic.forEach((card) => cardNames.add(card.name))
+        deck.energy.special.forEach((card) => cardNames.add(card.name))
       })
 
       // Fetch card images
@@ -133,6 +139,7 @@ function AppContent() {
                 playerDecks={state.deckAnalysis.playerDecks}
                 cardData={state.deckAnalysis.cardData}
                 errors={state.deckAnalysis.errors}
+                onBulkDownload={fetchCardImages}
               />
             )}
           </div>

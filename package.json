@@ -10,7 +10,14 @@
     "preview": "vite preview",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
+    "download:common": "node scripts/download-common-cards.js",
+    "download:set": "node scripts/download-card-images.js --set",
+    "download:cards": "node scripts/download-card-images.js --cards",
+    "download:log": "node scripts/download-from-log.js",
+    "download:recent": "node scripts/download-card-images.js --sets me2pt5,me2,me1,zsv10pt5,rsv10pt5,sv10,sv9,sv8pt5,sv8",
+    "list:sets": "node scripts/list-recent-sets.js",
+    "rebuild:manifest": "node scripts/rebuild-manifest.js"
   },
   "dependencies": {
     "pokemon-tcg-sdk-typescript": "^1.3.4",
@@ -27,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^8.55.0",
     "@typescript-eslint/parser": "^8.55.0",
     "@vitejs/plugin-react": "^5.1.1",
+    "dotenv": "^17.2.4",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -34,6 +42,7 @@
     "fast-check": "^4.5.3",
     "globals": "^16.5.0",
     "jsdom": "^28.0.0",
+    "node-fetch": "^3.3.2",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",

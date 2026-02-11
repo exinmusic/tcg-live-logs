@@ -48,6 +48,7 @@ export const PATTERNS = {
   prizeWin: /^(\w+) took all Prize cards/,
   noPokemon: /^(\w+) has no Pokémon in play\. (\w+) wins/,
   concede: /^(\w+) conceded/,
+  concedeWithWinner: /^You conceded\. (\w+) wins\./,
 
   // Damage breakdown
   damageBreakdown: /^- Damage breakdown:/,
