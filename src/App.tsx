@@ -139,7 +139,6 @@ function AppContent() {
                 playerDecks={state.deckAnalysis.playerDecks}
                 cardData={state.deckAnalysis.cardData}
                 errors={state.deckAnalysis.errors}
-                onBulkDownload={fetchCardImages}
               />
             )}
           </div>
