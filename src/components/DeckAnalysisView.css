@@ -38,7 +38,7 @@
   justify-content: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
-  border-radius: var(--radius-md);
+  border-radius: 0px;
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-md);
 }
@@ -77,10 +77,11 @@
 
 /* Player deck card */
 .player-deck-card {
-  background-color: var(--bg-elevated);
-  border-radius: var(--radius-lg);
+  background-color: var(--bg-secondary);
+  border: var(--retro-border);
+  border-radius: 0px;
+  box-shadow: var(--retro-shadow);
   padding: var(--spacing-lg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .deck-header {
@@ -123,12 +124,15 @@
 
 .category-header {
   margin: 0;
-  font-size: var(--font-size-md);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-md);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 2px dashed var(--border-primary);
 }
 
 .category-count {

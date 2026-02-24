@@ -1,6 +1,6 @@
 /**
- * EventItem Styles
- * Requirements: 3.3, 3.5, 3.6, 6.1
+ * EventItem Styles - Retro Pixel Restyling
+ * Requirements: 14.3, 14.4
  */
 
 .event-item {
@@ -8,23 +8,23 @@
   align-items: flex-start;
   gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  background-color: var(--bg-hover);
+  border-radius: 0px;
+  background-color: var(--bg-secondary);
   transition: background-color var(--transition-base), transform var(--transition-fast);
 }
 
 .event-item:hover {
-  background-color: var(--bg-active);
+  background-color: var(--bg-elevated);
 }
 
 .event-item--highlighted {
-  background-color: var(--color-secondary-subtle);
+  background-color: var(--bg-tertiary);
   border-left: 3px solid var(--color-secondary);
   padding-left: calc(var(--spacing-md) - 3px);
 }
 
 .event-item--highlighted:hover {
-  background-color: var(--color-secondary-light);
+  background-color: var(--bg-elevated);
 }
 
 .event-icon {
@@ -44,29 +44,34 @@
 }
 
 .event-type {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-normal);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-primary-light);
+  border-radius: 0px;
+  border: 2px solid var(--color-primary);
+  background-color: var(--bg-secondary);
   color: var(--color-primary);
   white-space: nowrap;
 }
 
 .event-type--attack {
-  background-color: var(--color-secondary-light);
+  border-color: var(--color-secondary);
+  background-color: var(--bg-secondary);
   color: var(--color-secondary);
 }
 
 .event-type--knockout {
-  background-color: var(--color-error-light);
+  border-color: var(--color-error);
+  background-color: var(--bg-secondary);
   color: var(--color-error);
 }
 
 .event-type--draw {
-  background-color: var(--color-success-light);
+  border-color: var(--color-success);
+  background-color: var(--bg-secondary);
   color: var(--color-success);
 }
 
@@ -84,16 +89,19 @@
 }
 
 .damage-badge {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-normal);
   padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  background-color: var(--bg-active);
+  border-radius: 0px;
+  border: 2px solid var(--text-secondary);
+  background-color: var(--bg-secondary);
   color: var(--text-secondary);
 }
 
 .damage-badge--high {
-  background-color: var(--color-secondary-light);
+  border-color: var(--color-secondary);
+  background-color: var(--bg-secondary);
   color: var(--color-secondary);
   animation: pulse 2s infinite;
 }

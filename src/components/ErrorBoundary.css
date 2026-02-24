@@ -1,6 +1,6 @@
 /**
  * ErrorBoundary Styles
- * Requirements: 6.4
+ * Requirements: 6.4, 3.5
  */
 
 .error-boundary {
@@ -15,6 +15,12 @@
 .error-boundary-content {
   text-align: center;
   max-width: 400px;
+  /* Apply retro panel styling - Requirement 3.5 */
+  background-color: var(--bg-secondary);
+  border: var(--retro-border);
+  border-radius: 0px;
+  box-shadow: var(--retro-shadow);
+  padding: var(--spacing-lg);
 }
 
 .error-boundary-icon {

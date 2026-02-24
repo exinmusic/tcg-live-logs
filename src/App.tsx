@@ -26,7 +26,7 @@ type ResultsTab = 'timeline' | 'statistics' | 'deck-analysis'
  * Inner App component that uses the context
  */
 function AppContent() {
-  const { state, submitLog, clearLog, setView, reconstructDecks, fetchCardImages } = useApp()
+  const { state, submitLog, clearLog, setView, reconstructDecks, fetchCardImages, toggleTheme, toggleCrt } = useApp()
   const [activeTab, setActiveTab] = useState<ResultsTab>('timeline')
 
   // Trigger deck reconstruction when switching to deck-analysis tab
@@ -73,6 +73,10 @@ function AppContent() {
         currentView={state.view}
         onNavigateToInput={handleBackToInput}
         showBackButton={state.view === 'results'}
+        theme={state.theme}
+        crtEnabled={state.crtEnabled}
+        onToggleTheme={toggleTheme}
+        onToggleCrt={toggleCrt}
       />
 
       <main className="app-main">

@@ -20,7 +20,10 @@ export function LoadingSpinner({
 }: LoadingSpinnerProps) {
   const content = (
     <div className={`loading-spinner-container loading-spinner-container--${size}`}>
-      <div className={`spinner spinner--${size}`} role="status" aria-label="Loading">
+      <div className="pixel-loader" role="status" aria-label="Loading">
+        <div className="pixel-loader__block"></div>
+        <div className="pixel-loader__block"></div>
+        <div className="pixel-loader__block"></div>
         <span className="spinner-sr-only">Loading...</span>
       </div>
       {message && <p className="spinner-message">{message}</p>}

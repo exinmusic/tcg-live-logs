@@ -84,10 +84,16 @@ export function parseSetup(lines: string[]): SetupParseResult {
     // Parse go first/second decision
     const goFirstMatch = matchLine(line, PATTERNS.goFirst)
     if (goFirstMatch) {
-      whoGoesFirst = goFirstMatch[1]
-      coinFlipChoice = goFirstMatch[2] as 'first' | 'second'
-      if (!player1) player1 = goFirstMatch[1]
-      else if (goFirstMatch[1] !== player1 && !player2) player2 = goFirstMatch[1]
+      const decisionMaker = goFirstMatch[1]
+      const decision = goFirstMatch[2] as 'first' | 'second'
+      coinFlipChoice = decision
+      
+      // If they decided to go first, they go first
+      // If they decided to go second, they DON'T go first (the other player does)
+      whoGoesFirst = decision === 'first' ? decisionMaker : null
+      
+      if (!player1) player1 = decisionMaker
+      else if (decisionMaker !== player1 && !player2) player2 = decisionMaker
       continue
     }
 
@@ -158,7 +164,17 @@ export function parseSetup(lines: string[]): SetupParseResult {
   }
 
   // Determine who goes first
-  const firstPlayer = whoGoesFirst || coinFlipWinner
+  let firstPlayer: string
+  if (whoGoesFirst) {
+    // Someone explicitly chose to go first
+    firstPlayer = whoGoesFirst
+  } else if (coinFlipChoice === 'second') {
+    // Coin flip winner chose to go second, so the other player goes first
+    firstPlayer = coinFlipWinner === player1 ? player2 : player1
+  } else {
+    // Default: coin flip winner goes first
+    firstPlayer = coinFlipWinner
+  }
   const isPlayer1First = firstPlayer === player1
 
   const players: [Player, Player] = [

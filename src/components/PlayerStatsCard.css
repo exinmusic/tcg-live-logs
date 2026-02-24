@@ -1,73 +1,82 @@
 /**
  * PlayerStatsCard Styles
+ * Requirements: 15.3
  */
 
 .player-stats-card {
-  background-color: #1a1a1a;
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid #3a3a3a;
+  background-color: var(--bg-secondary);
+  border: var(--retro-border);
+  border-radius: 0px;
+  box-shadow: var(--retro-shadow);
+  padding: var(--spacing-lg);
 }
 
 .player-stats-card--winner {
-  border-color: #646cff;
-  box-shadow: 0 0 20px rgba(100, 108, 255, 0.2);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
 }
 
 .player-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #3a3a3a;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 3px solid var(--border-primary);
 }
 
 .player-name {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: var(--font-size-heading-md);
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-normal);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
+  text-transform: uppercase;
 }
 
 .winner-icon {
-  font-size: 1rem;
+  font-size: var(--font-size-body-md);
 }
 
 .first-badge {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  background-color: rgba(100, 108, 255, 0.2);
-  color: #646cff;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 0px;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  text-transform: uppercase;
 }
 
 .no-stats {
   text-align: center;
   opacity: 0.6;
-  padding: 1rem;
+  padding: var(--spacing-md);
+  font-family: var(--font-body);
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-radius: 6px;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background-color: var(--bg-tertiary);
+  border: 2px solid var(--border-primary);
+  border-radius: 0px;
 }
 
 .stat-icon {
-  font-size: 1.25rem;
+  font-size: var(--font-size-body-lg);
   flex-shrink: 0;
 }
 
@@ -77,29 +86,33 @@
 }
 
 .stat-value {
-  font-size: 1rem;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-weight-bold);
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-sm);
   opacity: 0.7;
 }
 
 .trainer-section {
-  padding-top: 1rem;
-  border-top: 1px solid #3a3a3a;
+  padding-top: var(--spacing-md);
+  border-top: 3px solid var(--border-primary);
 }
 
 .trainer-title {
-  margin: 0 0 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  margin: 0 0 var(--spacing-md);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-normal);
   opacity: 0.9;
+  text-transform: uppercase;
 }
 
 .trainer-category {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .trainer-category:last-child {
@@ -107,9 +120,10 @@
 }
 
 .category-title {
-  margin: 0 0 0.25rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-normal);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -120,17 +134,19 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 }
 
 .trainer-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8125rem;
-  padding: 0.25rem 0.5rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
+  gap: var(--spacing-xs);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--bg-tertiary);
+  border: 2px solid var(--border-primary);
+  border-radius: 0px;
 }
 
 .trainer-name {
@@ -138,12 +154,13 @@
 }
 
 .trainer-count {
-  font-size: 0.75rem;
+  font-size: var(--font-size-body-sm);
   opacity: 0.7;
 }
 
 .no-trainers {
-  font-size: 0.875rem;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-md);
   opacity: 0.6;
   margin: 0;
 }
@@ -151,7 +168,7 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .player-stats-card {
-    padding: 1rem;
+    padding: var(--spacing-md);
   }
 
   .stats-grid {
@@ -161,34 +178,6 @@
   .player-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
-  }
-}
-
-/* Light mode adjustments */
-@media (prefers-color-scheme: light) {
-  .player-stats-card {
-    background-color: #ffffff;
-    border-color: #ddd;
-  }
-
-  .player-stats-card--winner {
-    border-color: #646cff;
-  }
-
-  .player-header {
-    border-bottom-color: #ddd;
-  }
-
-  .trainer-section {
-    border-top-color: #ddd;
-  }
-
-  .stat-item {
-    background-color: rgba(0, 0, 0, 0.02);
-  }
-
-  .trainer-item {
-    background-color: rgba(0, 0, 0, 0.04);
+    gap: var(--spacing-sm);
   }
 }

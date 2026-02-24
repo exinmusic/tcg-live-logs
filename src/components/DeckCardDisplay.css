@@ -9,16 +9,17 @@
   flex-direction: column;
   gap: var(--spacing-xs);
   padding: var(--spacing-sm);
-  background-color: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  border: 2px solid transparent;
-  transition: all var(--transition-normal);
+  background-color: var(--bg-secondary);
+  border: var(--retro-border);
+  border-radius: 0px;
+  box-shadow: var(--retro-shadow);
+  transition: all var(--transition-base);
   cursor: pointer;
 }
 
 .deck-card-display:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
   z-index: 10;
 }
 
@@ -36,7 +37,7 @@
 .card-image-container {
   width: 100%;
   aspect-ratio: 2.5 / 3.5;
-  border-radius: var(--radius-sm);
+  border-radius: 0px;
   overflow: hidden;
   background-color: var(--bg-secondary);
   display: flex;
@@ -58,7 +59,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  background: var(--bg-tertiary);
   border: 1px dashed var(--border-primary);
   padding: var(--spacing-sm);
 }
@@ -80,7 +81,7 @@
   height: 24px;
   border: 3px solid var(--border-primary);
   border-top-color: var(--color-primary);
-  border-radius: 50%;
+  border-radius: 0px;
   animation: spin 0.8s linear infinite;
 }
 
@@ -129,8 +130,8 @@
 .card-enlarged img {
   max-width: 220px;
   max-height: 308px;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 0px;
+  box-shadow: var(--shadow-xl);
   border: 2px solid var(--color-primary);
 }
 

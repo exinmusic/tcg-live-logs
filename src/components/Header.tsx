@@ -11,12 +11,20 @@ export interface HeaderProps {
   currentView?: 'input' | 'results'
   onNavigateToInput?: () => void
   showBackButton?: boolean
+  theme: 'dark' | 'light'
+  crtEnabled: boolean
+  onToggleTheme: () => void
+  onToggleCrt: () => void
 }
 
 export function Header({
   currentView = 'input',
   onNavigateToInput,
   showBackButton = false,
+  theme,
+  crtEnabled,
+  onToggleTheme,
+  onToggleCrt,
 }: HeaderProps) {
   return (
     <header className="app-header">
@@ -37,6 +45,24 @@ export function Header({
         <p className="app-subtitle">
           Analyze and visualize your Pokemon TCG Live matches
         </p>
+        <div className="header-controls">
+          <button
+            className="pixel-btn theme-toggle"
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? '☀' : '🌙'}
+          </button>
+          <button
+            className={`pixel-btn crt-toggle ${crtEnabled ? 'active' : ''}`}
+            onClick={onToggleCrt}
+            aria-label={`${crtEnabled ? 'Disable' : 'Enable'} CRT effect`}
+            title={`${crtEnabled ? 'Disable' : 'Enable'} CRT scanline overlay`}
+          >
+            CRT
+          </button>
+        </div>
       </div>
     </header>
   )

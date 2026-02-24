@@ -1,0 +1,220 @@
+Setup
+KingPDust chose tails for the opening coin flip.
+SpaghettiEd won the coin toss.
+SpaghettiEd decided to go second.
+KingPDust drew 7 cards for the opening hand.
+- 7 drawn cards.
+SpaghettiEd drew 7 cards for the opening hand.
+- 7 drawn cards.
+   • Dunsparce, Buddy-Buddy Poffin, Tulip, Enriching Energy, Boss's Orders, Rare Candy, Alakazam
+KingPDust took a mulligan.
+- Cards revealed from Mulligan 1
+   • Ivysaur, Basic Grass Energy, Boss's Orders, Bayleef, Bug Catching Set, Basic Grass Energy, Lillie's Determination
+SpaghettiEd drew 1 more card because KingPDust took at least 1 mulligan.
+- SpaghettiEd drew Enhanced Hammer.
+KingPDust played Teal Mask Ogerpon ex to the Active Spot.
+SpaghettiEd played Dunsparce to the Active Spot.
+
+[playerName]'s Turn
+KingPDust drew a card.
+KingPDust played Earthen Vessel.
+- KingPDust discarded Ivysaur.
+- KingPDust drew 2 cards.
+   • Basic Grass Energy, Basic Grass Energy
+- KingPDust shuffled their deck.
+KingPDust's Teal Mask Ogerpon ex used Teal Dance.
+- KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex in the Active Spot.
+- KingPDust drew a card.
+KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex in the Active Spot.
+KingPDust ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Kadabra.
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd drew 2 cards and played them to the Bench.
+   • Abra, Dunsparce
+- SpaghettiEd shuffled their deck.
+SpaghettiEd attached Enriching Energy to Dunsparce on the Bench.
+Enriching Energy was activated.
+- SpaghettiEd drew 4 cards.
+   • Great Ball, Artazon, Dudunsparce, Tulip
+SpaghettiEd played Great Ball.
+- SpaghettiEd drew Duskull.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Duskull to the Bench.
+SpaghettiEd ended their turn.
+
+[playerName]'s Turn
+KingPDust drew a card.
+KingPDust played Nest Ball.
+- KingPDust drew Teal Mask Ogerpon ex and played it to the Bench.
+- KingPDust shuffled their deck.
+KingPDust's Teal Mask Ogerpon ex used Teal Dance.
+- KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex on the Bench.
+- KingPDust drew a card.
+KingPDust's Teal Mask Ogerpon ex used Teal Dance.
+- KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex in the Active Spot.
+- KingPDust drew a card.
+KingPDust played Bug Catching Set.
+- KingPDust drew 2 cards.
+   • Chikorita, Bulbasaur
+- KingPDust shuffled their deck.
+KingPDust played Chikorita to the Bench.
+KingPDust played Bulbasaur to the Bench.
+KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex on the Bench.
+KingPDust's Teal Mask Ogerpon ex used Myriad Leaf Shower on SpaghettiEd’s Dunsparce for 120 damage.
+- Damage breakdown:
+   • Base damage: 30 damage
+   • 3 attached Energy: 90 damage
+   • Total damage: 120 damage
+
+SpaghettiEd's Dunsparce was Knocked Out!
+KingPDust took a Prize card.
+A card was added to KingPDust's hand.
+SpaghettiEd's Dunsparce is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Exp. Share.
+SpaghettiEd played Rare Candy.
+- SpaghettiEd evolved Abra to Alakazam on the Bench.
+SpaghettiEd's Alakazam used Psychic Draw.
+- SpaghettiEd drew 3 cards.
+   • Night Stretcher, Lillie's Determination, Lt. Surge's Bargain
+SpaghettiEd evolved Dunsparce to Dudunsparce in the Active Spot.
+SpaghettiEd played Lt. Surge's Bargain.
+SpaghettiEd took a Prize card.
+Basic Psychic Energy was added to SpaghettiEd's hand.
+KingPDust took a Prize card.
+A card was added to KingPDust's hand.
+SpaghettiEd attached Basic Psychic Energy to Alakazam on the Bench.
+SpaghettiEd's Dudunsparce used Run Away Draw.
+- SpaghettiEd drew 3 cards.
+   • Dudunsparce, Buddy-Buddy Poffin, Fezandipiti ex
+- SpaghettiEd shuffled 3 cards into their deck.
+   • Dudunsparce, Enriching Energy, Dunsparce
+SpaghettiEd's Alakazam is now in the Active Spot.
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd drew 2 cards and played them to the Bench.
+   • Abra, Abra
+- SpaghettiEd shuffled their deck.
+SpaghettiEd's Alakazam used Powerful Hand.
+- SpaghettiEd put 22 damage counters on SpaghettiEd's Teal Mask Ogerpon ex.
+KingPDust's Teal Mask Ogerpon ex was Knocked Out!
+- 3 cards were discarded from KingPDust's Teal Mask Ogerpon ex.
+   • Basic Grass Energy, Basic Grass Energy, Basic Grass Energy
+SpaghettiEd took 2 Prize cards.
+Buddy-Buddy Poffin was added to SpaghettiEd's hand.
+Lillie's Determination was added to SpaghettiEd's hand.
+KingPDust's Teal Mask Ogerpon ex is now in the Active Spot.
+
+[playerName]'s Turn
+KingPDust drew a card.
+KingPDust evolved Bulbasaur to Ivysaur on the Bench.
+KingPDust evolved Chikorita to Bayleef on the Bench.
+KingPDust's Teal Mask Ogerpon ex used Teal Dance.
+- KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex in the Active Spot.
+- KingPDust drew a card.
+KingPDust played Bug Catching Set.
+- KingPDust drew 2 cards.
+   • Meganium, Mega Venusaur ex
+- KingPDust shuffled their deck.
+KingPDust attached Basic Grass Energy to Ivysaur on the Bench.
+KingPDust played Lillie's Determination.
+- KingPDust shuffled 4 cards into their deck.
+- KingPDust drew 6 cards.
+KingPDust played Nest Ball.
+- KingPDust drew Fezandipiti ex and played it to the Bench.
+- KingPDust shuffled their deck.
+KingPDust played Nest Ball.
+- KingPDust drew Teal Mask Ogerpon ex and played it to the Bench.
+- KingPDust shuffled their deck.
+KingPDust's Fezandipiti ex used Flip the Script.
+- KingPDust drew 3 cards.
+KingPDust played Bug Catching Set.
+- KingPDust drew 2 cards.
+   • Meganium, Meganium
+- KingPDust shuffled their deck.
+KingPDust played Bulbasaur to the Bench.
+KingPDust's Teal Mask Ogerpon ex used Myriad Leaf Shower on SpaghettiEd’s Alakazam for 150 damage.
+- Damage breakdown:
+   • Base damage: 30 damage
+   • 4 attached Energy: 120 damage
+   • Total damage: 150 damage
+
+SpaghettiEd's Alakazam was Knocked Out!
+- 2 cards were discarded from SpaghettiEd's Alakazam.
+   • Basic Psychic Energy, Abra
+KingPDust took a Prize card.
+A card was added to KingPDust's hand.
+SpaghettiEd's Abra is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Counter Catcher.
+SpaghettiEd played Fezandipiti ex to the Bench.
+SpaghettiEd played Night Stretcher.
+- SpaghettiEd moved SpaghettiEd's Alakazam to their hand.
+SpaghettiEd evolved Abra to Kadabra on the Bench.
+SpaghettiEd's Kadabra used Psychic Draw.
+- SpaghettiEd drew 2 cards.
+   • Abra, Great Ball
+SpaghettiEd's Fezandipiti ex used Flip the Script.
+- SpaghettiEd drew 3 cards.
+   • Artazon, Alakazam, Budew
+SpaghettiEd played Abra to the Bench.
+SpaghettiEd attached Exp. Share to Abra on the Bench.
+SpaghettiEd played Tulip.
+- SpaghettiEd moved SpaghettiEd's 2 cards to their hand.
+   • Abra, Basic Psychic Energy
+SpaghettiEd attached Basic Psychic Energy to Kadabra on the Bench.
+SpaghettiEd ended their turn.
+
+[playerName]'s Turn
+KingPDust drew a card.
+KingPDust evolved Ivysaur to Mega Venusaur ex on the Bench.
+KingPDust retreated Teal Mask Ogerpon ex to the Bench.
+- Basic Grass Energy was discarded from KingPDust's Teal Mask Ogerpon ex.
+KingPDust's Mega Venusaur ex is now in the Active Spot.
+KingPDust evolved Bayleef to Meganium on the Bench.
+KingPDust's Teal Mask Ogerpon ex used Teal Dance.
+- KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex on the Bench.
+- KingPDust drew a card.
+KingPDust's Teal Mask Ogerpon ex used Teal Dance.
+- KingPDust attached Basic Grass Energy to Teal Mask Ogerpon ex on the Bench.
+- KingPDust drew a card.
+KingPDust played Boss's Orders.
+- SpaghettiEd's Fezandipiti ex was switched with SpaghettiEd's Abra to become the Active Pokémon.
+SpaghettiEd's Fezandipiti ex is now in the Active Spot.
+KingPDust's Mega Venusaur ex used Solar Transfer.
+- KingPDust attached Basic Grass Energy to Mega Venusaur ex in the Active Spot.
+KingPDust's Mega Venusaur ex used Jungle Dump on SpaghettiEd’s Fezandipiti ex for 240 damage.
+SpaghettiEd's Fezandipiti ex was Knocked Out!
+KingPDust took 2 Prize cards.
+A card was added to KingPDust's hand.
+A card was added to KingPDust's hand.
+SpaghettiEd's Kadabra is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Lillie's Determination.
+SpaghettiEd evolved Kadabra to Alakazam in the Active Spot.
+SpaghettiEd's Alakazam used Psychic Draw.
+- SpaghettiEd drew 3 cards.
+   • Dunsparce, Hilda, Enriching Energy
+SpaghettiEd played Hilda.
+- SpaghettiEd drew 2 cards.
+   • Kadabra, Basic Psychic Energy
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Dunsparce to the Bench.
+SpaghettiEd attached Enriching Energy to Dunsparce on the Bench.
+Enriching Energy was activated.
+- SpaghettiEd drew 4 cards.
+   • Dunsparce, Basic Psychic Energy, Boss's Orders, Hilda
+SpaghettiEd's Alakazam used Powerful Hand.
+- SpaghettiEd put 42 damage counters on SpaghettiEd's Mega Venusaur ex.
+KingPDust's Mega Venusaur ex was Knocked Out!
+- 4 cards were discarded from KingPDust's Mega Venusaur ex.
+   • Basic Grass Energy, Basic Grass Energy, Ivysaur, Bulbasaur
+SpaghettiEd took 3 Prize cards.
+Basic Psychic Energy was added to SpaghettiEd's hand.
+Battle Cage was added to SpaghettiEd's hand.
+Dusknoir was added to SpaghettiEd's hand.
+All Prize cards taken. SpaghettiEd wins.

@@ -1,6 +1,6 @@
 /**
- * LoadingSpinner Styles
- * Requirements: 6.3
+ * LoadingSpinner Styles - Retro Pixel Block Animation
+ * Requirements: 9.1, 9.2, 9.3
  */
 
 .loading-spinner-container {
@@ -19,36 +19,36 @@
   gap: var(--spacing-lg);
 }
 
-/* Spinner */
-.spinner {
-  border-radius: 50%;
-  border-style: solid;
-  border-color: var(--color-primary-light);
-  border-top-color: var(--color-primary);
-  animation: spinner-rotate 1s linear infinite;
+/* Pixel Block Loader */
+.pixel-loader {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
 }
 
-.spinner--small {
-  width: 24px;
-  height: 24px;
-  border-width: 2px;
+.pixel-loader__block {
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  animation: blink-cursor 1s step-end infinite;
 }
 
-.spinner--medium {
-  width: 40px;
-  height: 40px;
-  border-width: 3px;
+.pixel-loader__block:nth-child(2) {
+  animation-delay: 0.2s;
 }
 
-.spinner--large {
-  width: 56px;
-  height: 56px;
-  border-width: 4px;
+.pixel-loader__block:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
-@keyframes spinner-rotate {
-  to {
-    transform: rotate(360deg);
+/* Blink cursor animation */
+@keyframes blink-cursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }
 
@@ -65,10 +65,11 @@
   border: 0;
 }
 
-/* Message */
+/* Message - using body font (VT323) */
 .spinner-message {
   color: var(--text-secondary);
-  font-size: var(--font-size-base);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-md);
   margin: 0;
   text-align: center;
 }
@@ -83,19 +84,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(26, 26, 46, 0.9);
+  background-color: var(--bg-primary);
+  opacity: 0.95;
   z-index: var(--z-overlay);
   animation: fadeIn var(--transition-base);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .spinner--large {
-    width: 48px;
-    height: 48px;
+  .pixel-loader__block {
+    width: 10px;
+    height: 10px;
   }
 
   .spinner-message {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-body-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .pixel-loader__block {
+    width: 8px;
+    height: 8px;
   }
 }

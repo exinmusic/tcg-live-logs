@@ -4,7 +4,7 @@
  * Provides actions: submitLog, clearLog, fetchSprites
  */
 
-import { createContext, useReducer, useCallback, type ReactNode } from 'react'
+import { createContext, useReducer, useCallback, useEffect, type ReactNode } from 'react'
 import type { AppState, MatchData, PokemonSprite, PlayerDecks, CardData } from '../types'
 import { parseLog } from '../parser'
 import { fetchSprites as fetchSpritesFromApi, type SpriteResult } from '../api/pokeApiService'
@@ -31,6 +31,10 @@ type AppAction =
   | { type: 'FETCH_CARD_IMAGE_SUCCESS'; payload: { cardName: string; cardData: CardData } }
   | { type: 'FETCH_CARD_IMAGES_SUCCESS'; payload: Map<string, CardData> }
   | { type: 'FETCH_CARD_IMAGES_ERROR'; payload: { cardName: string; error: string } }
+  | { type: 'TOGGLE_THEME' }
+  | { type: 'SET_THEME'; payload: 'dark' | 'light' }
+  | { type: 'TOGGLE_CRT' }
+  | { type: 'SET_CRT'; payload: boolean }
 
 /**
  * Context value interface with state and actions
@@ -44,6 +48,82 @@ export interface AppContextValue {
   setRawLog: (log: string) => void
   reconstructDecks: (matchData: MatchData) => void
   fetchCardImages: (cardNames: string[]) => Promise<void>
+  toggleTheme: () => void
+  setTheme: (theme: 'dark' | 'light') => void
+  toggleCrt: () => void
+  setCrt: (enabled: boolean) => void
+}
+
+/**
+ * Read theme preference from localStorage with fallback
+ */
+function getInitialTheme(): 'dark' | 'light' {
+  try {
+    const stored = localStorage.getItem('retro-theme')
+    if (stored === 'dark' || stored === 'light') {
+      return stored
+    }
+  } catch {
+    // localStorage unavailable (private browsing, etc.)
+  }
+  return 'dark'
+}
+
+/**
+ * Read CRT preference from localStorage with fallback
+ */
+function getInitialCrt(): boolean {
+  try {
+    const stored = localStorage.getItem('retro-crt')
+    return stored === 'true'
+  } catch {
+    // localStorage unavailable (private browsing, etc.)
+  }
+  return false
+}
+
+/**
+ * Apply theme class to document element
+ */
+function applyThemeClass(theme: 'dark' | 'light') {
+  if (theme === 'light') {
+    document.documentElement.classList.add('light-theme')
+  } else {
+    document.documentElement.classList.remove('light-theme')
+  }
+}
+
+/**
+ * Apply CRT class to document element
+ */
+function applyCrtClass(enabled: boolean) {
+  if (enabled) {
+    document.documentElement.classList.add('crt-enabled')
+  } else {
+    document.documentElement.classList.remove('crt-enabled')
+  }
+}
+
+/**
+ * Persist theme to localStorage
+ */
+function persistTheme(theme: 'dark' | 'light') {
+  try {
+    localStorage.setItem('retro-theme', theme)
+  } catch {
+    // localStorage unavailable
+  }
+}
+
+/**
+ * Persist CRT setting to localStorage
+ */
+function persistCrt(enabled: boolean) {
+  try {
+    localStorage.setItem('retro-crt', enabled.toString())
+  } catch {
+    // localStorage unavailable
+  }
 }
 
 /**
@@ -61,6 +141,8 @@ const initialState: AppState = {
     cardData: new Map(),
     errors: [],
   },
+  theme: getInitialTheme(),
+  crtEnabled: getInitialCrt(),
 }
 
 /**
@@ -235,6 +317,44 @@ function appReducer(state: AppState, action: AppAction): AppState {
       }
     }
 
+    case 'TOGGLE_THEME': {
+      const newTheme = state.theme === 'dark' ? 'light' : 'dark'
+      applyThemeClass(newTheme)
+      persistTheme(newTheme)
+      return {
+        ...state,
+        theme: newTheme,
+      }
+    }
+
+    case 'SET_THEME': {
+      applyThemeClass(action.payload)
+      persistTheme(action.payload)
+      return {
+        ...state,
+        theme: action.payload,
+      }
+    }
+
+    case 'TOGGLE_CRT': {
+      const newCrtEnabled = !state.crtEnabled
+      applyCrtClass(newCrtEnabled)
+      persistCrt(newCrtEnabled)
+      return {
+        ...state,
+        crtEnabled: newCrtEnabled,
+      }
+    }
+
+    case 'SET_CRT': {
+      applyCrtClass(action.payload)
+      persistCrt(action.payload)
+      return {
+        ...state,
+        crtEnabled: action.payload,
+      }
+    }
+
     default:
       return state
   }
@@ -269,6 +389,12 @@ function convertToPokemonSprite(result: SpriteResult): PokemonSprite {
  */
 export function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState)
+
+  // Apply initial theme and CRT classes on mount and when they change
+  useEffect(() => {
+    applyThemeClass(state.theme)
+    applyCrtClass(state.crtEnabled)
+  }, [state.theme, state.crtEnabled])
 
   /**
    * Submit a log for parsing
@@ -394,6 +520,34 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   }, [])
 
+  /**
+   * Toggle theme between dark and light
+   */
+  const toggleTheme = useCallback(() => {
+    dispatch({ type: 'TOGGLE_THEME' })
+  }, [])
+
+  /**
+   * Set theme to a specific value
+   */
+  const setTheme = useCallback((theme: 'dark' | 'light') => {
+    dispatch({ type: 'SET_THEME', payload: theme })
+  }, [])
+
+  /**
+   * Toggle CRT scanline overlay
+   */
+  const toggleCrt = useCallback(() => {
+    dispatch({ type: 'TOGGLE_CRT' })
+  }, [])
+
+  /**
+   * Set CRT overlay to a specific value
+   */
+  const setCrt = useCallback((enabled: boolean) => {
+    dispatch({ type: 'SET_CRT', payload: enabled })
+  }, [])
+
   const value: AppContextValue = {
     state,
     submitLog,
@@ -403,6 +557,10 @@ export function AppProvider({ children }: AppProviderProps) {
     setRawLog,
     reconstructDecks: reconstructDecksAction,
     fetchCardImages,
+    toggleTheme,
+    setTheme,
+    toggleCrt,
+    setCrt,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

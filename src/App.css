@@ -31,12 +31,13 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  padding: var(--spacing-md);
+  padding: var(--spacing-lg);
   margin-top: var(--spacing-md);
-  background-color: var(--color-error-light);
-  border: 1px solid var(--color-secondary-light);
-  border-radius: var(--radius-lg);
-  color: var(--color-secondary);
+  background-color: var(--bg-secondary);
+  border: var(--retro-border);
+  border-radius: 0px;
+  box-shadow: var(--retro-shadow);
+  color: var(--text-primary);
 }
 
 .error-icon {
@@ -63,37 +64,53 @@
   justify-content: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-sm);
-  background-color: var(--bg-hover);
-  border-radius: var(--radius-xl);
+  background-color: var(--bg-secondary);
+  border-radius: 0px;
   width: fit-content;
   margin: 0 auto;
 }
 
 .toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-lg);
   min-width: 140px;
-  border: none;
-  border-radius: var(--radius-lg);
-  background-color: transparent;
-  color: var(--text-tertiary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  text-transform: uppercase;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: var(--retro-border);
+  border-radius: 0px;
+  box-shadow: var(--retro-shadow);
   cursor: pointer;
   transition: all var(--transition-base);
 }
 
 .toggle-btn:hover {
-  background-color: var(--bg-active);
-  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--bg-elevated);
 }
 
 .toggle-btn--active {
   background-color: var(--color-primary);
-  color: white;
+  color: var(--bg-primary);
+  border-color: var(--color-primary);
 }
 
 .toggle-btn--active:hover {
   background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.toggle-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0px 0px 0px var(--shadow-color);
 }
 
 /* Responsive Design */

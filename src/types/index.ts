@@ -115,6 +115,8 @@ export interface AppState {
     cardData: Map<string, CardFetchState>
     errors: string[]
   }
+  theme: 'dark' | 'light'
+  crtEnabled: boolean
 }
 
 /**

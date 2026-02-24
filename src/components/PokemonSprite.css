@@ -1,6 +1,6 @@
 /**
  * PokemonSprite Styles
- * Requirements: 5.3, 5.4, 6.1
+ * Requirements: 16.1, 16.2, 16.3
  */
 
 .pokemon-sprite {
@@ -8,7 +8,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: var(--radius-lg);
+  border-radius: 0px;
+  border: 2px solid var(--border-primary);
   overflow: hidden;
   background-color: var(--bg-hover);
   transition: transform var(--transition-base), box-shadow var(--transition-base);
@@ -21,15 +22,15 @@
 
 /* Size variants */
 .pokemon-sprite--small {
-  border-radius: var(--radius-sm);
+  border-radius: 0px;
 }
 
 .pokemon-sprite--medium {
-  border-radius: var(--radius-md);
+  border-radius: 0px;
 }
 
 .pokemon-sprite--large {
-  border-radius: var(--radius-lg);
+  border-radius: 0px;
 }
 
 /* Image styling */
@@ -46,14 +47,8 @@
 
 /* Loading state */
 .pokemon-sprite--loading {
-  background: linear-gradient(
-    90deg,
-    var(--bg-hover) 25%,
-    var(--bg-active) 50%,
-    var(--bg-hover) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  background-color: var(--bg-hover);
+  animation: blink-cursor 1s step-end infinite;
 }
 
 .pokemon-sprite__loader {
@@ -61,14 +56,15 @@
   height: 50%;
   border: 2px solid var(--color-primary-light);
   border-top-color: var(--color-primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  border-radius: 0px;
+  animation: blink-cursor 1s step-end infinite;
 }
 
 /* Placeholder state */
 .pokemon-sprite--placeholder {
   background-color: var(--color-primary-subtle);
-  border: 1px dashed var(--color-primary-light);
+  border: 2px dashed var(--color-primary-light);
+  border-radius: 0px;
 }
 
 .pokemon-sprite__placeholder-icon {
@@ -86,12 +82,12 @@
 }
 
 /* Animations */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+@keyframes blink-cursor {
+  0%, 100% {
+    opacity: 1;
   }
-  100% {
-    background-position: 200% 0;
+  50% {
+    opacity: 0.3;
   }
 }
 
