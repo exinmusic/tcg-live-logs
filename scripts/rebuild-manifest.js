@@ -101,13 +101,25 @@ async function rebuildManifest() {
       if (!manifest.byName[normalized]) {
         manifest.byName[normalized] = [];
       }
-      manifest.byName[normalized].push({
+      const indexEntry = {
         id: cardEntry.id,
         filename: cardEntry.filename,
         set: cardEntry.set,
         setId: cardEntry.setId,
         releaseDate: cardEntry.releaseDate,
-      });
+      };
+      manifest.byName[normalized].push(indexEntry);
+      
+      // For basic energy cards, also add "Basic X Energy" variant
+      // (e.g., "Psychic Energy" -> also index as "Basic Psychic Energy")
+      if (existingCard.name.match(/^(Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal) Energy$/)) {
+        const basicName = `Basic ${existingCard.name}`;
+        const basicNormalized = normalizeCardName(basicName);
+        if (!manifest.byName[basicNormalized]) {
+          manifest.byName[basicNormalized] = [];
+        }
+        manifest.byName[basicNormalized].push(indexEntry);
+      }
 
       processed++;
     } else {

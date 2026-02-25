@@ -99,6 +99,38 @@ describe('Log Parser', () => {
       expect(bluesStats.totalDamageDealt).toBe(840)
     })
 
+    it('should track damage from damage counters', () => {
+      const logWithDamageCounters = `Setup
+Player1 chose heads for the opening coin flip.
+Player1 won the coin toss.
+Player1 decided to go first.
+Player1 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player2 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player1 played Alakazam to the Active Spot.
+Player2 played Pikachu ex to the Active Spot.
+
+[playerName]'s Turn
+Player1 drew a card.
+Player1 attached Basic Psychic Energy to Alakazam in the Active Spot.
+Player1's Alakazam used Powerful Hand.
+- Player1 put 22 damage counters on Player2's Pikachu ex.
+Player2's Pikachu ex was Knocked Out!
+Player1 took 2 Prize cards.
+A card was added to Player1's hand.
+A card was added to Player1's hand.
+Player2 conceded`
+
+      const result = parseLog(logWithDamageCounters)
+      expect(result.success).toBe(true)
+      if (!result.success) return
+
+      const player1Stats = result.data.statistics['Player1']
+      // 22 damage counters = 220 damage
+      expect(player1Stats.totalDamageDealt).toBe(220)
+    })
+
     it('should track knockouts correctly', () => {
       const result = parseLog(sampleLog)
       expect(result.success).toBe(true)
@@ -117,6 +149,45 @@ describe('Log Parser', () => {
       const bluesStats = result.data.statistics['xxXBLUESINXxx']
       // xxXBLUESINXxx took 4 prize cards (one per knockout)
       expect(bluesStats.prizeCardsTaken).toBe(4)
+    })
+
+    it('should track multiple prize cards taken at once', () => {
+      const logWithMultiplePrizes = `Setup
+Player1 chose heads for the opening coin flip.
+Player1 won the coin toss.
+Player1 decided to go first.
+Player1 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player2 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player1 played Pikachu to the Active Spot.
+Player2 played Alakazam ex to the Active Spot.
+
+[playerName]'s Turn
+Player1 drew a card.
+Player1 attached Basic Electric Energy to Pikachu in the Active Spot.
+Player1's Pikachu used Thunder Shock on Player2's Alakazam ex for 20 damage.
+
+[playerName]'s Turn
+Player2 drew a card.
+Player2 attached Basic Psychic Energy to Alakazam ex in the Active Spot.
+Player2's Alakazam ex used Psychic Blast on Player1's Pikachu for 220 damage.
+Player1's Pikachu was Knocked Out!
+Player2 took 2 Prize cards.
+A card was added to Player2's hand.
+A card was added to Player2's hand.
+Player1's Charmander is now in the Active Spot.
+
+[playerName]'s Turn
+Player1 drew a card.
+Player1 conceded`
+
+      const result = parseLog(logWithMultiplePrizes)
+      expect(result.success).toBe(true)
+      if (!result.success) return
+
+      const player2Stats = result.data.statistics['Player2']
+      expect(player2Stats.prizeCardsTaken).toBe(2)
     })
 
     it('should categorize trainer cards', () => {
@@ -215,6 +286,34 @@ Player1 ended their turn.
 [playerName]'s Turn
 Player2 drew a card.
 Player1 conceded`
+
+      const result = parseLog(concedeLog)
+      expect(result.success).toBe(true)
+      if (!result.success) return
+
+      expect(result.data.winner).toBe('Player2')
+      expect(result.data.winCondition).toBe('concede')
+    })
+
+    it('should detect winner from "Opponent conceded. Winner wins." format', () => {
+      const concedeLog = `Setup
+Player1 chose heads for the opening coin flip.
+Player2 won the coin toss.
+Player2 decided to go second.
+Player1 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player2 drew 7 cards for the opening hand.
+- 7 drawn cards.
+Player1 played Totodile to the Active Spot.
+Player2 played Abra to the Active Spot.
+
+[playerName]'s Turn
+Player1 drew a card.
+Player1 ended their turn.
+
+[playerName]'s Turn
+Player2 drew a card.
+Opponent conceded. Player2 wins.`
 
       const result = parseLog(concedeLog)
       expect(result.success).toBe(true)

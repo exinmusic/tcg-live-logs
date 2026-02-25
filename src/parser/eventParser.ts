@@ -46,6 +46,7 @@ export function parseTurns(
   
   let currentPlayer = orderedPlayers[0]
   let lastDamageBreakdown: string | null = null
+  let lastAbilityUsed: { player: string; pokemon: string; ability: string } | null = null
 
   // Track which player's turn it is by alternating
   let turnPlayerIndex = 0
@@ -113,6 +114,13 @@ export function parseTurns(
       event = createWinEvent(winner, winCondition, turnNumber, timestamp++)
     }
 
+    const opponentConcedeWithWinnerMatch = matchLine(line, PATTERNS.opponentConcedeWithWinner)
+    if (!event && opponentConcedeWithWinnerMatch) {
+      winner = opponentConcedeWithWinnerMatch[1]
+      winCondition = 'concede'
+      event = createWinEvent(winner, winCondition, turnNumber, timestamp++)
+    }
+
     const concedeMatch = matchLine(line, PATTERNS.concede)
     if (!event && concedeMatch) {
       const conceder = concedeMatch[1]
@@ -148,6 +156,34 @@ export function parseTurns(
       lastDamageBreakdown = null
     }
 
+    // Parse damage counters (e.g., from abilities like Powerful Hand)
+    const damageCountersMatch = matchLine(line, PATTERNS.damageCounters)
+    if (!event && damageCountersMatch) {
+      const attacker = damageCountersMatch[1]
+      const counters = parseInt(damageCountersMatch[2], 10)
+      const targetPlayer = damageCountersMatch[3]
+      const targetPokemon = damageCountersMatch[4]
+      const damage = counters * 10 // Each damage counter = 10 damage
+
+      addPokemonIfNew(pokemonInMatch, targetPokemon)
+
+      // Use the last ability if available, otherwise use generic info
+      const attackingPokemon = lastAbilityUsed?.pokemon || 'Unknown'
+      const attackName = lastAbilityUsed?.ability || 'Damage Counters'
+
+      // This is treated as an attack event for statistics purposes
+      event = createAttackEvent(
+        attacker,
+        attackingPokemon,
+        attackName,
+        targetPokemon,
+        damage,
+        null,
+        turnNumber,
+        timestamp++
+      )
+    }
+
     // Parse knockout
     const knockoutMatch = matchLine(line, PATTERNS.knockout)
     if (!event && knockoutMatch) {
@@ -168,7 +204,8 @@ export function parseTurns(
     const prizeTakenMatch = matchLine(line, PATTERNS.prizeTaken)
     if (!event && prizeTakenMatch) {
       const prizeTaker = prizeTakenMatch[1]
-      event = createPrizeTakenEvent(prizeTaker, turnNumber, timestamp++)
+      const prizeCount = prizeTakenMatch[2] ? parseInt(prizeTakenMatch[2], 10) : 1
+      event = createPrizeTakenEvent(prizeTaker, prizeCount, turnNumber, timestamp++)
     }
 
     // Parse switch
@@ -187,6 +224,10 @@ export function parseTurns(
       const abilityPokemon = abilityMatch[2]
       const abilityName = abilityMatch[3]
       addPokemonIfNew(pokemonInMatch, abilityPokemon)
+      
+      // Track the last ability used for potential damage counter events
+      lastAbilityUsed = { player: abilityPlayer, pokemon: abilityPokemon, ability: abilityName }
+      
       event = createAbilityEvent(
         abilityPlayer,
         abilityPokemon,
@@ -539,16 +580,18 @@ function createKnockoutEvent(
 
 function createPrizeTakenEvent(
   player: string,
+  prizeCount: number,
   turn: number,
   timestamp: number
 ): GameEvent {
+  const cardText = prizeCount === 1 ? 'a Prize card' : `${prizeCount} Prize cards`
   return {
     id: generateEventId(),
     turn,
     player,
     type: 'prize_taken',
-    description: `${player} took a Prize card`,
-    details: { prizesTaken: 1 },
+    description: `${player} took ${cardText}`,
+    details: { prizesTaken: prizeCount },
     timestamp,
   }
 }

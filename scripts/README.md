@@ -45,9 +45,47 @@ sv8pt5         Surging Sparks                               2024-11-08     191
 ...
 ```
 
-### 2. download-card-images.js
+### 2. download-from-limitless.js
 
-Downloads Pokemon TCG card images for offline use. Creates a manifest.json for fast lookups.
+Downloads Pokemon TCG card images from Limitless TCG. Use this when the official Pokemon TCG API is down or for sets not available via API.
+
+**Basic Usage:**
+```bash
+# Download a specific set
+npm run download:limitless SVE
+node scripts/download-from-limitless.js --set SVE
+
+# Download multiple sets
+node scripts/download-from-limitless.js --sets SVE,SVI,PAL
+
+# Download with specific range
+node scripts/download-from-limitless.js --set SVI --start 1 --end 198
+```
+
+**Options:**
+- `--set <setCode>` - Download all cards from a specific set (e.g., SVE, SVI, PAL)
+- `--sets <codes>` - Download from multiple sets (comma-separated)
+- `--output <dir>` - Output directory (default: public/card-images)
+- `--start <num>` - Start card number (default: 1)
+- `--end <num>` - End card number (optional, will auto-detect)
+- `--max-attempts <n>` - Max consecutive 404s before stopping (default: 5)
+
+**Common Set Codes:**
+- `SVE` - Scarlet & Violet Energy cards
+- `SVI` - Scarlet & Violet base set
+- `PAL` - Paldea Evolved
+- `OBF` - Obsidian Flames
+- `PAR` - Paradox Rift
+
+**How it works:**
+- Scrapes card pages from limitlesstcg.com
+- Auto-detects when a set ends (5 consecutive missing cards)
+- Updates the same manifest.json as the API downloader
+- Rate limited to 200ms between requests
+
+### 3. download-card-images.js
+
+Downloads Pokemon TCG card images from the official Pokemon TCG API. Creates a manifest.json for fast lookups.
 
 **Basic Usage:**
 ```bash
@@ -90,7 +128,7 @@ Get a free API key at: https://pokemontcg.io
 - Images saved as `{cardId}.png` in `public/card-images/`
 - Manifest saved as `public/card-images/manifest.json`
 
-### 3. rebuild-manifest.js
+### 4. rebuild-manifest.js
 
 Rebuilds the manifest.json from existing card images. Useful if you manually added images or the manifest got corrupted.
 

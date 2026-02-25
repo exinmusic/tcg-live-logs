@@ -44,7 +44,7 @@ export function calculateStatistics(
         break
 
       case 'prize_taken':
-        playerStats.prizeCardsTaken += 1
+        playerStats.prizeCardsTaken += event.details.prizesTaken ?? 1
         break
 
       case 'play_trainer':

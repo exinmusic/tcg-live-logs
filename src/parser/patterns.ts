@@ -37,8 +37,9 @@ export const PATTERNS = {
 
   // Combat
   attack: /^(\w+)['\u2019]s (.+?) used (.+?) on (\w+)['\u2019]s (.+?) for (\d+) damage/,
+  damageCounters: /^- (\w+) put (\d+) damage counters? on (\w+)['\u2019]s (.+)/,
   knockout: /^(\w+)['\u2019]s (.+?) was Knocked Out/,
-  prizeTaken: /^(\w+) took a Prize card/,
+  prizeTaken: /^(\w+) took (?:a Prize card|(\d+) Prize cards)/,
 
   // Coin flips
   coinFlip: /flipped (\d+) coins?, and (\d+) landed on heads/,
@@ -47,6 +48,7 @@ export const PATTERNS = {
   deckOut: /^Opponent['\u2019]s deck ran out of cards\. (\w+) wins/,
   prizeWin: /^(?:(\w+) took all Prize cards|All Prize cards taken\. (\w+) wins)/,
   noPokemon: /^(\w+) has no Pokémon in play\. (\w+) wins/,
+  opponentConcedeWithWinner: /^Opponent conceded\. (\w+) wins\./,
   concede: /^(\w+) conceded/,
   concedeWithWinner: /^You conceded\. (\w+) wins\./,
 
@@ -69,7 +71,7 @@ export const SKIP_PATTERNS = [
   /^- .+ drew .+ and played/,  // Skip "drew X and played it to the Bench" metadata lines
   /^A card was added to .+['\u2019]s hand/,
   /^- .+ shuffled/,
-  /^- .+ put \d+ cards/,
+  /^- .+ put \d+ cards(?! damage)/,  // Skip "put X cards" but NOT "put X damage counters"
   /^- .+ moved .+ cards to/,
   /^- .+ discarded/,
   /^- \d+ cards were discarded/,

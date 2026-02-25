@@ -16,10 +16,12 @@
     "download:cards": "node scripts/download-card-images.js --cards",
     "download:log": "node scripts/download-from-log.js",
     "download:recent": "node scripts/download-card-images.js --sets me2pt5,me2,me1,zsv10pt5,rsv10pt5,sv10,sv9,sv8pt5,sv8",
+    "download:limitless": "node scripts/download-from-limitless.js --set",
     "list:sets": "node scripts/list-recent-sets.js",
     "rebuild:manifest": "node scripts/rebuild-manifest.js"
   },
   "dependencies": {
+    "cheerio": "^1.2.0",
     "pixelarticons": "^2.0.2",
     "pokemon-tcg-sdk-typescript": "^1.3.4",
     "react": "^19.2.0",
