@@ -29,7 +29,7 @@ export const PATTERNS = {
   attachedEnergy: /^(\w+) attached (.+?) to (.+?)(?: in the Active Spot| on the Bench)?\.?$/,
 
   // Trainer cards
-  playedTrainer: /^(\w+) played (.+?)(?:\.|$)/,
+  playedTrainer: /^(\w+) played (.+?)\.?$/,
   playedStadium: /^(\w+) played (.+?) to the Stadium spot/,
 
   // Abilities

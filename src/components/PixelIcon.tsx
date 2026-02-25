@@ -17,6 +17,8 @@ import {
   Coins,
   Crown,
   WarningDiamond,
+  InfoBox,
+  Smile,
 } from 'pixelarticons/react'
 
 export type IconType =
@@ -38,6 +40,8 @@ export type IconType =
   | 'turns'
   | 'warning'
   | 'significant'
+  | 'info'
+  | 'smile'
 
 interface PixelIconProps {
   type: IconType
@@ -87,6 +91,10 @@ export function PixelIcon({ type, size = 24, className = '', title }: PixelIconP
       return <Crown {...props} />
     case 'warning':
       return <WarningDiamond {...props} />
+    case 'info':
+      return <InfoBox {...props} />
+    case 'smile':
+      return <Smile {...props} />
     default:
       return <span {...props}>•</span>
   }

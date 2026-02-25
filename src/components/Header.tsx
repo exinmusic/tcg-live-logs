@@ -5,6 +5,7 @@
  * Requirements: 6.1, 6.5
  */
 
+import { Lightbulb, Moon } from 'pixelarticons/react'
 import './Header.css'
 
 export interface HeaderProps {
@@ -30,7 +31,7 @@ export function Header({
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
         title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       >
-        {theme === 'dark' ? '☀' : '🌙'}
+        {theme === 'dark' ? <Lightbulb width={20} height={20} /> : <Moon width={20} height={20} />}
       </button>
       <div className="header-content">
         {showBackButton && currentView === 'results' && (

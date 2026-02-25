@@ -6,6 +6,7 @@
  */
 
 import type { PokemonSprite as PokemonSpriteData } from '../types'
+import { PixelIcon } from './PixelIcon'
 import './PokemonSprite.css'
 
 export interface PokemonSpriteProps {
@@ -62,9 +63,7 @@ export function PokemonSprite({ pokemonName, sprite, size = 'medium' }: PokemonS
         aria-label={`Placeholder for ${pokemonName}`}
         title={pokemonName}
       >
-        <span className="pokemon-sprite__placeholder-icon" aria-hidden="true">
-          🎴
-        </span>
+        <PixelIcon type="smile" size={dimensions / 2} className="pokemon-sprite__placeholder-icon" />
       </div>
     )
   }
