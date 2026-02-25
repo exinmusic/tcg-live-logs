@@ -334,7 +334,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
     case 'TOGGLE_CRT': {
       const newCrtEnabled = !state.crtEnabled
-      applyCrtClass(newCrtEnabled)
+      applyCrtClass()
       persistCrt(newCrtEnabled)
       return {
         ...state,
@@ -343,7 +343,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
     }
 
     case 'SET_CRT': {
-      applyCrtClass(action.payload)
+      applyCrtClass()
       persistCrt(action.payload)
       return {
         ...state,

@@ -7,6 +7,7 @@
 
 import type { MatchData, Turn, PokemonSprite } from '../types'
 import { TurnCard } from './TurnCard'
+import { PixelIcon } from './PixelIcon'
 import './TimelineView.css'
 
 export interface TimelineViewProps {
@@ -65,7 +66,9 @@ export function TimelineView({ matchData, sprites }: TimelineViewProps) {
       {matchData.winner && (
         <div className="timeline-footer">
           <div className="winner-banner">
-            <span className="winner-icon">🏆</span>
+            <span className="winner-icon">
+              <PixelIcon type="winner" size={24} />
+            </span>
             <span className="winner-text">
               {matchData.winner} wins by {formatWinCondition(matchData.winCondition)}!
             </span>

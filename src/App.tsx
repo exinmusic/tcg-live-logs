@@ -18,6 +18,7 @@ import {
   ErrorBoundary,
   LoadingSpinner,
 } from './components'
+import { PixelIcon } from './components/PixelIcon'
 import './App.css'
 
 type ResultsTab = 'timeline' | 'statistics' | 'deck-analysis'
@@ -88,7 +89,9 @@ function AppContent() {
             />
             {state.error && (
               <div className="error-banner" role="alert">
-                <span className="error-icon">⚠️</span>
+                <span className="error-icon">
+                  <PixelIcon type="warning" size={20} />
+                </span>
                 <span className="error-text">{state.error}</span>
               </div>
             )}

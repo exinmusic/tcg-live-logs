@@ -7,6 +7,7 @@
 
 import type { GameEvent, PokemonSprite } from '../types'
 import { PokemonSprite as PokemonSpriteComponent } from './PokemonSprite'
+import { PixelIcon, type IconType } from './PixelIcon'
 import './EventItem.css'
 
 export interface EventItemProps {
@@ -16,39 +17,11 @@ export interface EventItemProps {
 }
 
 /**
- * Get icon for event type
+ * Get icon type for event
  */
-function getEventIcon(type: GameEvent['type']): string {
-  switch (type) {
-    case 'draw':
-      return '🃏'
-    case 'play_pokemon':
-      return '🎯'
-    case 'evolve':
-      return '⬆️'
-    case 'attach_energy':
-      return '⚡'
-    case 'play_trainer':
-      return '📋'
-    case 'use_ability':
-      return '✨'
-    case 'attack':
-      return '⚔️'
-    case 'knockout':
-      return '💥'
-    case 'prize_taken':
-      return '🏆'
-    case 'switch':
-      return '🔄'
-    case 'coin_flip':
-      return '🪙'
-    case 'mulligan':
-      return '🔁'
-    case 'win':
-      return '👑'
-    default:
-      return '•'
-  }
+function getEventIconType(type: GameEvent['type']): IconType {
+  // Map event types directly to icon types
+  return type as IconType
 }
 
 /**
@@ -143,14 +116,14 @@ function formatEventDetails(event: GameEvent): string {
 }
 
 export function EventItem({ event, sprites, isHighlighted }: EventItemProps) {
-  const icon = getEventIcon(event.type)
+  const iconType = getEventIconType(event.type)
   const formattedDetails = formatEventDetails(event)
   const pokemonNames = getPokemonFromEvent(event)
 
   return (
     <div className={`event-item ${isHighlighted ? 'event-item--highlighted' : ''}`}>
-      <span className="event-icon" aria-hidden="true">
-        {icon}
+      <span className="event-icon">
+        <PixelIcon type={iconType} size={20} />
       </span>
       <div className="event-content">
         <span className="event-type">{formatEventType(event.type)}</span>

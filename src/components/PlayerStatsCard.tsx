@@ -6,6 +6,7 @@
  */
 
 import type { Player, PlayerStatistics, PokemonSprite } from '../types'
+import { PixelIcon, type IconType } from './PixelIcon'
 import './PlayerStatsCard.css'
 
 export interface PlayerStatsCardProps {
@@ -45,22 +46,26 @@ export function PlayerStatsCard({ player, stats, isWinner = false }: PlayerStats
     <div className={`player-stats-card ${isWinner ? 'player-stats-card--winner' : ''}`}>
       <div className="player-header">
         <h3 className="player-name">
-          {isWinner && <span className="winner-icon">🏆</span>}
+          {isWinner && (
+            <span className="winner-icon">
+              <PixelIcon type="winner" size={20} />
+            </span>
+          )}
           {player.username}
         </h3>
         {player.isFirst && <span className="first-badge">Went First</span>}
       </div>
 
       <div className="stats-grid">
-        <StatItem label="Damage Dealt" value={stats.totalDamageDealt} icon="⚔️" />
-        <StatItem label="Cards Drawn" value={stats.totalCardsDrawn} icon="🃏" />
-        <StatItem label="Pokemon KO'd" value={stats.pokemonKnockedOut} icon="💥" />
-        <StatItem label="Prizes Taken" value={stats.prizeCardsTaken} icon="🏆" />
-        <StatItem label="Turns Played" value={stats.turnsPlayed} icon="🔄" />
+        <StatItem label="Damage Dealt" value={stats.totalDamageDealt} iconType="damage" />
+        <StatItem label="Cards Drawn" value={stats.totalCardsDrawn} iconType="draw" />
+        <StatItem label="Pokemon KO'd" value={stats.pokemonKnockedOut} iconType="knockout" />
+        <StatItem label="Prizes Taken" value={stats.prizeCardsTaken} iconType="prize_taken" />
+        <StatItem label="Turns Played" value={stats.turnsPlayed} iconType="turns" />
         <StatItem
           label="Coin Flips"
           value={`${stats.coinFlips.heads}H / ${stats.coinFlips.tails}T`}
-          icon="🪙"
+          iconType="coin_flip"
         />
       </div>
 
@@ -112,14 +117,14 @@ export function PlayerStatsCard({ player, stats, isWinner = false }: PlayerStats
 interface StatItemProps {
   label: string
   value: number | string
-  icon: string
+  iconType: IconType
 }
 
-function StatItem({ label, value, icon }: StatItemProps) {
+function StatItem({ label, value, iconType }: StatItemProps) {
   return (
     <div className="stat-item">
-      <span className="stat-icon" aria-hidden="true">
-        {icon}
+      <span className="stat-icon">
+        <PixelIcon type={iconType} size={20} />
       </span>
       <div className="stat-content">
         <span className="stat-value">{value}</span>

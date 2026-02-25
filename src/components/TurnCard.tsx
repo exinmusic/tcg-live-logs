@@ -8,6 +8,7 @@
 import { useState } from 'react'
 import type { Turn, PokemonSprite } from '../types'
 import { EventItem } from './EventItem'
+import { PixelIcon } from './PixelIcon'
 import { isSignificantEvent } from '../utils'
 import './TurnCard.css'
 
@@ -46,7 +47,7 @@ export function TurnCard({ turn, playerColors, sprites }: TurnCardProps) {
           <span className="event-count">{turn.events.length} actions</span>
           {hasSignificantEvents && (
             <span className="significant-badge" title="Contains significant events">
-              ⚡
+              <PixelIcon type="significant" size={16} />
             </span>
           )}
         </div>

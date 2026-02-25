@@ -6,6 +6,7 @@
  */
 
 import { Component, type ReactNode, type ErrorInfo } from 'react'
+import { PixelIcon } from './PixelIcon'
 import './ErrorBoundary.css'
 
 interface ErrorBoundaryProps {
@@ -46,7 +47,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <div className="error-boundary" role="alert">
           <div className="error-boundary-content">
-            <span className="error-boundary-icon">⚠️</span>
+            <span className="error-boundary-icon">
+              <PixelIcon type="warning" size={48} />
+            </span>
             <h2 className="error-boundary-title">Something went wrong</h2>
             <p className="error-boundary-message">
               We encountered an unexpected error. Please try again.

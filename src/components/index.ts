@@ -54,3 +54,6 @@ export type { ToastNotificationProps } from './ToastNotification'
 
 export { ModalOverlay } from './ModalOverlay'
 export type { ModalOverlayProps } from './ModalOverlay'
+
+export { PixelIcon } from './PixelIcon'
+export type { IconType } from './PixelIcon'

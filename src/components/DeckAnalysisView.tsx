@@ -7,6 +7,7 @@
 
 import type { MatchData, PlayerDecks, CardFetchState, CardData } from '../types'
 import { PlayerDeckCard } from './PlayerDeckCard'
+import { PixelIcon } from './PixelIcon'
 import './DeckAnalysisView.css'
 
 export interface DeckAnalysisViewProps {
@@ -63,7 +64,9 @@ export function DeckAnalysisView({ playerDecks, cardData, errors }: DeckAnalysis
 
         {apiError && (
           <div className="error-banner">
-            <span className="error-icon">⚠️</span>
+            <span className="error-icon">
+              <PixelIcon type="warning" size={20} />
+            </span>
             {apiError}
           </div>
         )}

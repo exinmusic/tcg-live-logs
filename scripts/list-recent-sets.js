@@ -21,6 +21,12 @@ async function listRecentSets() {
   
   try {
     const response = await fetch('https://api.pokemontcg.io/v2/sets', { headers });
+    
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`API returned ${response.status}: ${text.substring(0, 200)}`);
+    }
+    
     const data = await response.json();
     
     // Sort by release date (newest first)
