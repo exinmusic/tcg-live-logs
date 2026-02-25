@@ -100,7 +100,8 @@ export function parseTurns(
 
     const prizeWinMatch = matchLine(line, PATTERNS.prizeWin)
     if (!event && prizeWinMatch) {
-      winner = prizeWinMatch[1]
+      // Pattern has two alternatives: group 1 for "X took all Prize cards" or group 2 for "All Prize cards taken. X wins"
+      winner = prizeWinMatch[1] || prizeWinMatch[2]
       winCondition = 'prizes'
       event = createWinEvent(winner, winCondition, turnNumber, timestamp++)
     }

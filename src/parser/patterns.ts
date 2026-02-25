@@ -45,7 +45,7 @@ export const PATTERNS = {
 
   // Win conditions
   deckOut: /^Opponent['\u2019]s deck ran out of cards\. (\w+) wins/,
-  prizeWin: /^(\w+) took all Prize cards/,
+  prizeWin: /^(?:(\w+) took all Prize cards|All Prize cards taken\. (\w+) wins)/,
   noPokemon: /^(\w+) has no Pokémon in play\. (\w+) wins/,
   concede: /^(\w+) conceded/,
   concedeWithWinner: /^You conceded\. (\w+) wins\./,

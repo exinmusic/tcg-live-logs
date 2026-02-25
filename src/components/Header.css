@@ -11,6 +11,7 @@
   border-radius: 0px;
   margin-bottom: var(--spacing-xl);
   background-color: var(--bg-secondary);
+  position: relative;
 }
 
 .header-content {
@@ -19,11 +20,10 @@
   position: relative;
 }
 
-.header-controls {
-  display: flex;
-  gap: var(--spacing-md);
-  justify-content: center;
-  margin-top: var(--spacing-md);
+.theme-toggle {
+  position: absolute !important;
+  right: var(--spacing-md);
+  top: var(--spacing-lg);
 }
 
 .pixel-btn {
@@ -38,7 +38,6 @@
   font-size: var(--font-size-heading-sm);
   box-shadow: 4px 4px 0px var(--shadow-color);
   transition: all var(--transition-base);
-  position: relative;
 }
 
 .pixel-btn:hover {
@@ -141,8 +140,9 @@
     align-items: center;
   }
 
-  .header-controls {
-    margin-top: var(--spacing-sm);
+  .theme-toggle {
+    position: static;
+    margin-bottom: var(--spacing-md);
   }
 }
 

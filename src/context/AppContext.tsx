@@ -66,7 +66,7 @@ function getInitialTheme(): 'dark' | 'light' {
   } catch {
     // localStorage unavailable (private browsing, etc.)
   }
-  return 'dark'
+  return 'light'
 }
 
 /**
@@ -79,7 +79,7 @@ function getInitialCrt(): boolean {
   } catch {
     // localStorage unavailable (private browsing, etc.)
   }
-  return false
+  return true
 }
 
 /**
@@ -94,14 +94,10 @@ function applyThemeClass(theme: 'dark' | 'light') {
 }
 
 /**
- * Apply CRT class to document element
+ * Apply CRT class to document element (always enabled)
  */
-function applyCrtClass(enabled: boolean) {
-  if (enabled) {
-    document.documentElement.classList.add('crt-enabled')
-  } else {
-    document.documentElement.classList.remove('crt-enabled')
-  }
+function applyCrtClass() {
+  document.documentElement.classList.add('crt-enabled')
 }
 
 /**
@@ -390,11 +386,11 @@ function convertToPokemonSprite(result: SpriteResult): PokemonSprite {
 export function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState)
 
-  // Apply initial theme and CRT classes on mount and when they change
+  // Apply initial theme and CRT classes on mount
   useEffect(() => {
     applyThemeClass(state.theme)
-    applyCrtClass(state.crtEnabled)
-  }, [state.theme, state.crtEnabled])
+    applyCrtClass()
+  }, [state.theme])
 
   /**
    * Submit a log for parsing
