@@ -54,7 +54,6 @@ export const TRAINER_CATEGORIES: Record<string, TrainerCategory> = {
   'Canceling Cologne': 'item',
   'Defiance Band': 'item',
   'Choice Belt': 'item',
-  'Exp. Share': 'item',
   'Forest Seal Stone': 'item',
   'Technical Machine: Evolution': 'item',
   'Technical Machine: Devolution': 'item',
@@ -77,6 +76,7 @@ export const TRAINER_CATEGORIES: Record<string, TrainerCategory> = {
   'Bravery Charm': 'tool',
   'Rocky Helmet': 'tool',
   'Leftovers': 'tool',
+  'Exp. Share': 'tool', // Pokémon Tool that shares energy
 
   // Stadiums - affect the field
   Artazon: 'stadium',

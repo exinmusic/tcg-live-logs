@@ -43,6 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .card-image {
@@ -50,6 +51,73 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Variant indicator */
+.variant-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: var(--bg-primary);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: 8px;
+  font-weight: var(--font-weight-normal);
+  padding: 3px 6px;
+  border: 2px solid var(--color-primary);
+  z-index: 5;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* Card set info */
+.card-set-info {
+  font-size: 9px;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-top: -4px;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+}
+
+/* Enlarged set info */
+.enlarged-set-info {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-primary);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: 8px;
+  padding: 4px 8px;
+  border: 2px solid var(--color-primary);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+}
+
+/* Cursor hint for cards with variants */
+.deck-card-display.has-variants {
+  cursor: pointer;
+}
+
+.deck-card-display.has-variants:hover .card-image-container::after {
+  content: 'CLICK';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-primary);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: 8px;
+  padding: 3px 6px;
+  border: 2px solid var(--color-primary);
+  white-space: nowrap;
+  z-index: 5;
+  line-height: 1;
+  animation: blink 1s step-end infinite;
 }
 
 /* Placeholder styles */

@@ -1,0 +1,225 @@
+Setup
+SpaghettiEd chose heads for the opening coin flip.
+SpaghettiEd won the coin toss.
+SpaghettiEd decided to go second.
+SpaghettiEd drew 7 cards for the opening hand.
+- 7 drawn cards.
+   • Fezandipiti ex, Great Ball, Nest Ball, Alakazam, Lillie's Determination, Tulip, Enhanced Hammer
+ampunnn drew 7 cards for the opening hand.
+- 7 drawn cards.
+SpaghettiEd played Fezandipiti ex to the Active Spot.
+ampunnn played Pecharunt ex to the Active Spot.
+
+[playerName]'s Turn
+ampunnn drew a card.
+ampunnn played Nest Ball.
+- ampunnn drew Carvanha and played it to the Bench.
+- ampunnn shuffled their deck.
+ampunnn played Nest Ball.
+- ampunnn drew Fezandipiti ex and played it to the Bench.
+- ampunnn shuffled their deck.
+ampunnn attached Basic Darkness Energy to Carvanha on the Bench.
+ampunnn attached Binding Mochi to Carvanha on the Bench.
+ampunnn ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Great Ball.
+SpaghettiEd played Nest Ball.
+- SpaghettiEd drew Abra and played it to the Bench.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Great Ball.
+- SpaghettiEd drew Dunsparce.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Dunsparce to the Bench.
+SpaghettiEd played Great Ball.
+- SpaghettiEd drew Alakazam.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd played Lillie's Determination.
+- SpaghettiEd shuffled 4 cards into their deck.
+   • Alakazam, Tulip, Enhanced Hammer, Alakazam
+- SpaghettiEd drew 8 cards.
+   • Enhanced Hammer, Basic Psychic Energy, Buddy-Buddy Poffin, Buddy-Buddy Poffin, Arven, Buddy-Buddy Poffin, Lillie's Determination, Hilda
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd drew 2 cards and played them to the Bench.
+   • Abra, Dunsparce
+- SpaghettiEd shuffled their deck.
+SpaghettiEd attached Basic Psychic Energy to Fezandipiti ex in the Active Spot.
+SpaghettiEd retreated Fezandipiti ex to the Bench.
+- Basic Psychic Energy was discarded from SpaghettiEd's Fezandipiti ex.
+SpaghettiEd's Dunsparce is now in the Active Spot.
+SpaghettiEd played Buddy-Buddy Poffin.
+- SpaghettiEd drew Dunsparce and played it to the Bench.
+- SpaghettiEd shuffled their deck.
+SpaghettiEd ended their turn.
+
+[playerName]'s Turn
+ampunnn drew a card.
+ampunnn played Gastly to the Bench.
+ampunnn ended their turn.
+
+[playerName]'s Turn
+SpaghettiEd drew Alakazam.
+SpaghettiEd played Hilda.
+- SpaghettiEd drew 2 cards.
+   • Kadabra, Enriching Energy
+- SpaghettiEd shuffled their deck.
+SpaghettiEd attached Enriching Energy to Dunsparce on the Bench.
+Enriching Energy was activated.
+- SpaghettiEd drew 4 cards.
+   • Kadabra, Basic Psychic Energy, Lt. Surge's Bargain, Alakazam
+SpaghettiEd evolved Abra to Kadabra on the Bench.
+SpaghettiEd's Kadabra used Psychic Draw.
+- SpaghettiEd drew 2 cards.
+   • Boss's Orders, Rare Candy
+SpaghettiEd evolved Abra to Kadabra on the Bench.
+SpaghettiEd's Kadabra used Psychic Draw.
+- SpaghettiEd drew 2 cards.
+   • Tulip, Night Stretcher
+SpaghettiEd ended their turn.
+
+[playerName]'s Turn
+ampunnn drew a card.
+ampunnn attached Basic Darkness Energy to Carvanha on the Bench.
+ampunnn's Pecharunt ex used Subjugating Chains.
+- ampunnn's Carvanha was switched with ampunnn's Pecharunt ex to become the Active Pokémon.
+- ampunnn's Carvanha is now Poisoned.
+ampunnn's Carvanha is now in the Active Spot.
+ampunnn's Carvanha used Reckless Charge on SpaghettiEd’s Dunsparce for 70 damage.
+- Damage breakdown:
+   • Base damage: 30 damage
+   • (Pokémon Tool) Binding Mochi: 40 damage
+   • Total damage: 70 damage
+
+- ampunnn's Carvanha took 10 damage.
+SpaghettiEd's Dunsparce was Knocked Out!
+ampunnn took a Prize card.
+A card was added to ampunnn's hand.
+SpaghettiEd's Dunsparce is now in the Active Spot.
+
+Pokémon Checkup
+1 damage counter was placed on ampunnn's Carvanha for the Special Condition Poisoned.
+
+[playerName]'s Turn
+SpaghettiEd drew Basic Psychic Energy.
+SpaghettiEd evolved Kadabra to Alakazam on the Bench.
+SpaghettiEd's Alakazam used Psychic Draw.
+- SpaghettiEd drew 3 cards.
+   • Tulip, Budew, Rare Candy
+SpaghettiEd evolved Kadabra to Alakazam on the Bench.
+SpaghettiEd's Alakazam used Psychic Draw.
+- SpaghettiEd drew 3 cards.
+   • Basic Psychic Energy, Exp. Share, Dudunsparce
+SpaghettiEd attached Exp. Share to Alakazam on the Bench.
+SpaghettiEd attached Basic Psychic Energy to Alakazam on the Bench.
+SpaghettiEd's Fezandipiti ex used Flip the Script.
+- SpaghettiEd drew 3 cards.
+   • Alakazam, Battle Cage, Basic Psychic Energy
+SpaghettiEd evolved Dunsparce to Dudunsparce in the Active Spot.
+SpaghettiEd played Boss's Orders.
+- ampunnn's Pecharunt ex was switched with ampunnn's Carvanha to become the Active Pokémon.
+ampunnn's Pecharunt ex is now in the Active Spot.
+SpaghettiEd played Dudunsparce.
+- SpaghettiEd drew 3 cards.
+   • Kadabra, Basic Psychic Energy, Battle Cage
+- SpaghettiEd shuffled 2 cards into their deck.
+   • Dudunsparce, Dunsparce
+SpaghettiEd's Alakazam is now in the Active Spot.
+SpaghettiEd's Alakazam used Powerful Hand.
+- SpaghettiEd put 38 damage counters on SpaghettiEd's Pecharunt ex.
+ampunnn's Pecharunt ex was Knocked Out!
+SpaghettiEd took 2 Prize cards.
+Dudunsparce was added to SpaghettiEd's hand.
+Hilda was added to SpaghettiEd's hand.
+ampunnn's Carvanha is now in the Active Spot.
+
+[playerName]'s Turn
+ampunnn drew a card.
+ampunnn evolved Carvanha to Mega Sharpedo ex in the Active Spot.
+ampunnn's Fezandipiti ex used Flip the Script.
+- ampunnn drew 3 cards.
+ampunnn played Mega Signal.
+- ampunnn drew Mega Gengar ex.
+- ampunnn shuffled their deck.
+ampunnn played Rare Candy.
+- ampunnn evolved Gastly to Mega Gengar ex on the Bench.
+ampunnn attached Basic Darkness Energy to Mega Gengar ex on the Bench.
+ampunnn played Pecharunt ex to the Bench.
+ampunnn's Mega Sharpedo ex used Greedy Fang on SpaghettiEd’s Alakazam for 140 damage. SpaghettiEd's Alakazam took 70 more damage because of Darkness Weakness.
+- Damage breakdown:
+   • Base damage: 70 damage
+   • Weakness to Darkness: 70 damage
+   • Total damage: 140 damage
+
+- ampunnn drew 2 cards.
+Exp. Share was activated.
+- SpaghettiEd attached Basic Psychic Energy to Alakazam on the Bench.
+SpaghettiEd's Alakazam was Knocked Out!
+- 2 cards were discarded from SpaghettiEd's Alakazam.
+   • Kadabra, Abra
+ampunnn took a Prize card.
+A card was added to ampunnn's hand.
+SpaghettiEd's Alakazam is now in the Active Spot.
+
+[playerName]'s Turn
+SpaghettiEd drew Abra.
+SpaghettiEd's Fezandipiti ex used Flip the Script.
+- SpaghettiEd drew 3 cards.
+   • Abra, Rare Candy, Artazon
+SpaghettiEd played Abra to the Bench.
+SpaghettiEd evolved Dunsparce to Dudunsparce on the Bench.
+SpaghettiEd played Dudunsparce.
+- SpaghettiEd drew 3 cards.
+   • Alakazam, Arven, Great Ball
+- SpaghettiEd shuffled 3 cards into their deck.
+   • Dudunsparce, Enriching Energy, Dunsparce
+SpaghettiEd attached Basic Psychic Energy to Abra on the Bench.
+SpaghettiEd's Alakazam used Powerful Hand.
+- SpaghettiEd put 50 damage counters on SpaghettiEd's Mega Sharpedo ex.
+ampunnn's Mega Sharpedo ex was Knocked Out!
+- 4 cards were discarded from ampunnn's Mega Sharpedo ex.
+   • Basic Darkness Energy, Basic Darkness Energy, Carvanha, Binding Mochi
+SpaghettiEd took 3 Prize cards.
+Duskull was added to SpaghettiEd's hand.
+Artazon was added to SpaghettiEd's hand.
+Dusknoir was added to SpaghettiEd's hand.
+ampunnn's Fezandipiti ex is now in the Active Spot.
+
+[playerName]'s Turn
+ampunnn drew a card.
+ampunnn attached Basic Darkness Energy to Mega Gengar ex on the Bench.
+ampunnn's Fezandipiti ex used Flip the Script.
+- ampunnn drew 3 cards.
+ampunnn played Munkidori to the Bench.
+ampunnn played Gastly to the Bench.
+ampunnn played Buddy-Buddy Poffin.
+- ampunnn drew Carvanha and played it to the Bench.
+- ampunnn shuffled their deck.
+ampunnn played Lillie's Determination.
+- ampunnn shuffled 5 cards into their deck.
+- ampunnn drew 6 cards.
+ampunnn's Pecharunt ex used Subjugating Chains.
+- ampunnn's Mega Gengar ex was switched with ampunnn's Fezandipiti ex to become the Active Pokémon.
+- ampunnn's Mega Gengar ex is now Poisoned.
+ampunnn's Mega Gengar ex is now in the Active Spot.
+ampunnn's Mega Gengar ex used Void Gale on SpaghettiEd’s Alakazam for 460 damage. SpaghettiEd's Alakazam took 230 more damage because of Darkness Weakness.
+- Damage breakdown:
+   • Base damage: 230 damage
+   • Weakness to Darkness: 230 damage
+   • Total damage: 460 damage
+
+- ampunnn attached Basic Darkness Energy to Carvanha on the Bench.
+SpaghettiEd's Alakazam was Knocked Out!
+- 4 cards were discarded from SpaghettiEd's Alakazam.
+   • Basic Psychic Energy, Kadabra, Abra, Exp. Share
+ampunnn took a Prize card.
+A card was added to ampunnn's hand.
+SpaghettiEd's Abra is now in the Active Spot.
+
+Pokémon Checkup
+1 damage counter was placed on ampunnn's Mega Gengar ex for the Special Condition Poisoned.
+
+[playerName]'s Turn
+SpaghettiEd drew Dudunsparce.
+SpaghettiEd played Rare Candy.
+- SpaghettiEd evolved Abra to Alakazam in the Active Spot.
+Opponent conceded. SpaghettiEd wins.

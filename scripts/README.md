@@ -128,7 +128,30 @@ Get a free API key at: https://pokemontcg.io
 - Images saved as `{cardId}.png` in `public/card-images/`
 - Manifest saved as `public/card-images/manifest.json`
 
-### 4. rebuild-manifest.js
+### 4. update-release-dates.js
+
+Updates the manifest.json with correct release dates based on set information. Fixes cards with empty or NaN release dates.
+
+**Usage:**
+```bash
+npm run update:dates
+# or
+node scripts/update-release-dates.js
+```
+
+**What it does:**
+- Loads existing manifest.json
+- Updates empty/NaN release dates based on set name
+- Updates the byName index with new dates
+- Re-sorts entries by release date (newest first)
+- Reports which sets are missing date mappings
+
+**When to use:**
+- After downloading cards with missing release dates
+- When you notice cards showing NaN dates
+- After adding new sets to the date mapping
+
+### 5. rebuild-manifest.js
 
 Rebuilds the manifest.json from existing card images. Useful if you manually added images or the manifest got corrupted.
 

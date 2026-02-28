@@ -75,6 +75,32 @@ async function loadManifest(): Promise<Manifest | null> {
 }
 
 /**
+ * Parse release date string to Date object for comparison
+ */
+function parseReleaseDate(dateStr: string): Date {
+  if (!dateStr) return new Date(0) // No date = oldest
+  
+  if (dateStr.includes('/')) {
+    const parts = dateStr.split('/')
+    
+    // Detect format by checking if first part is 4 digits (YYYY/MM/DD) or 1-2 digits (MM/DD/YY)
+    if (parts[0].length === 4) {
+      // YYYY/MM/DD format
+      const [year, month, day] = parts
+      return new Date(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`)
+    } else {
+      // MM/DD/YY or MM/DD/YYYY format
+      const [month, day, year] = parts
+      const fullYear = year.length === 2 ? `20${year}` : year
+      return new Date(`${fullYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`)
+    }
+  }
+  
+  // Fallback: try direct parsing
+  return new Date(dateStr)
+}
+
+/**
  * Get local image URL for a card by name
  * Returns the most recent version if multiple exist
  * @param cardName - Name of the card
@@ -95,15 +121,22 @@ export async function getLocalCardImage(cardName: string): Promise<string | null
     return null
   }
 
-  // Return most recent (first in sorted array)
-  const mostRecent = matches[0]
+  // Sort by release date (most recent first)
+  const sorted = [...matches].sort((a, b) => {
+    const dateA = parseReleaseDate(a.releaseDate)
+    const dateB = parseReleaseDate(b.releaseDate)
+    return dateB.getTime() - dateA.getTime()
+  })
+
+  const mostRecent = sorted[0]
   const url = `/card-images/${mostRecent.filename}`
-  console.log(`[LocalCardImages] Found local image for "${cardName}": ${url}`)
+  console.log(`[LocalCardImages] Found local image for "${cardName}": ${url} (${mostRecent.set}, ${mostRecent.releaseDate})`)
   return url
 }
 
 /**
  * Get all local image URLs for a card by name (all versions)
+ * Sorted by release date (most recent first)
  * @param cardName - Name of the card
  * @returns Array of local image URLs with metadata
  */
@@ -112,6 +145,7 @@ export async function getAllLocalCardImages(cardName: string): Promise<Array<{
   set: string
   setId: string
   releaseDate: string
+  id: string
 }>> {
   const manifest = await loadManifest()
   if (!manifest || !manifest.byName) {
@@ -125,11 +159,19 @@ export async function getAllLocalCardImages(cardName: string): Promise<Array<{
     return []
   }
 
-  return matches.map(card => ({
+  // Sort by release date (most recent first)
+  const sorted = [...matches].sort((a, b) => {
+    const dateA = parseReleaseDate(a.releaseDate)
+    const dateB = parseReleaseDate(b.releaseDate)
+    return dateB.getTime() - dateA.getTime()
+  })
+
+  return sorted.map(card => ({
     url: `/card-images/${card.filename}`,
     set: card.set,
     setId: card.setId,
     releaseDate: card.releaseDate,
+    id: card.id,
   }))
 }
 

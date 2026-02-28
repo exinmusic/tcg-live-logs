@@ -306,13 +306,14 @@ export function parseTurns(
       const energyName = energyMatch[2]
       const targetPokemon = energyMatch[3]
 
-      // Check if this is a tool attachment (Gravity Gemstone, Air Balloon, etc.)
-      const toolCategory = getTrainerCategory(energyName)
-      if (toolCategory === 'tool') {
+      // Check if this is a trainer card attachment (tools like Exp. Share, Choice Belt, etc.)
+      const trainerCategory = getTrainerCategory(energyName)
+      if (trainerCategory === 'tool' || trainerCategory === 'item') {
+        // Items like Exp. Share can be attached as tools
         event = createTrainerEvent(
           energyPlayer,
           energyName,
-          'tool',
+          trainerCategory,
           turnNumber,
           timestamp++
         )

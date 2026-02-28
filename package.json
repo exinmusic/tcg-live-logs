@@ -18,7 +18,8 @@
     "download:recent": "node scripts/download-card-images.js --sets me2pt5,me2,me1,zsv10pt5,rsv10pt5,sv10,sv9,sv8pt5,sv8",
     "download:limitless": "node scripts/download-from-limitless.js --set",
     "list:sets": "node scripts/list-recent-sets.js",
-    "rebuild:manifest": "node scripts/rebuild-manifest.js"
+    "rebuild:manifest": "node scripts/rebuild-manifest.js",
+    "update:dates": "node scripts/update-release-dates.js"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
