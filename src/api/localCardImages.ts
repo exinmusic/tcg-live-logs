@@ -3,6 +3,9 @@
  * Loads card images from local manifest instead of API
  */
 
+const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || '/card-images'
+const MANIFEST_URL = `${IMAGE_BASE_URL}/manifest.json`
+
 interface ManifestCard {
   id: string
   filename: string
@@ -54,7 +57,7 @@ async function loadManifest(): Promise<Manifest | null> {
   console.log('[LocalCardImages] Loading manifest...')
   manifestLoadPromise = (async () => {
     try {
-      const response = await fetch('/card-images/manifest.json')
+      const response = await fetch(MANIFEST_URL)
       if (!response.ok) {
         console.warn('[LocalCardImages] Manifest not found:', response.status)
         return null
@@ -129,7 +132,7 @@ export async function getLocalCardImage(cardName: string): Promise<string | null
   })
 
   const mostRecent = sorted[0]
-  const url = `/card-images/${mostRecent.filename}`
+  const url = `${IMAGE_BASE_URL}/${mostRecent.filename}`
   console.log(`[LocalCardImages] Found local image for "${cardName}": ${url} (${mostRecent.set}, ${mostRecent.releaseDate})`)
   return url
 }
@@ -167,7 +170,7 @@ export async function getAllLocalCardImages(cardName: string): Promise<Array<{
   })
 
   return sorted.map(card => ({
-    url: `/card-images/${card.filename}`,
+    url: `${IMAGE_BASE_URL}/${card.filename}`,
     set: card.set,
     setId: card.setId,
     releaseDate: card.releaseDate,

@@ -161,7 +161,7 @@ export function parseTurns(
     if (!event && damageCountersMatch) {
       const attacker = damageCountersMatch[1]
       const counters = parseInt(damageCountersMatch[2], 10)
-      const targetPlayer = damageCountersMatch[3]
+      // const targetPlayer = damageCountersMatch[3] // Not currently used
       const targetPokemon = damageCountersMatch[4]
       const damage = counters * 10 // Each damage counter = 10 damage
 

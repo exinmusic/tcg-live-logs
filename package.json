@@ -19,7 +19,9 @@
     "download:limitless": "node scripts/download-from-limitless.js --set",
     "list:sets": "node scripts/list-recent-sets.js",
     "rebuild:manifest": "node scripts/rebuild-manifest.js",
-    "update:dates": "node scripts/update-release-dates.js"
+    "update:dates": "node scripts/update-release-dates.js",
+    "deploy": "bash scripts/deploy.sh",
+    "upload:images": "bash scripts/upload-images.sh"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
