@@ -139,3 +139,14 @@
     padding: var(--spacing-sm);
   }
 }
+
+/* Past Games Placeholder (task 9 will replace this with the real component) */
+.past-games-placeholder {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px dashed var(--border-color, #ccc);
+  border-radius: var(--border-radius-md, 8px);
+  text-align: center;
+  color: var(--text-secondary, #888);
+  font-size: var(--font-size-sm, 0.875rem);
+}

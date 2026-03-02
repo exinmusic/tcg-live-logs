@@ -2,7 +2,203 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Pokemon TCG Log Visualizer - Static Site Hosting with CloudFront
 
+Parameters:
+  CognitoUserPoolName:
+    Type: String
+    Default: tcg-log-visualizer-users
+    Description: Name for the Cognito User Pool
+
 Resources:
+  # Cognito User Pool for Authentication
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Ref CognitoUserPoolName
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      EmailConfiguration:
+        EmailSendingAccount: COGNITO_DEFAULT
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Required: true
+          Mutable: false
+      UserAttributeUpdateSettings:
+        AttributesRequireVerificationBeforeUpdate:
+          - email
+
+  # Cognito User Pool Client
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub '${AWS::StackName}-web-client'
+      UserPoolId: !Ref UserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_SRP_AUTH
+      PreventUserExistenceErrors: ENABLED
+      TokenValidityUnits:
+        IdToken: hours
+        AccessToken: hours
+        RefreshToken: days
+      IdTokenValidity: 1
+      AccessTokenValidity: 1
+      RefreshTokenValidity: 30
+
+  # DynamoDB Table for Game Logs
+  GameLogsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${AWS::StackName}-GameLogs'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: logId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: logId
+          KeyType: RANGE
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  # IAM Role for Lambda Functions
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-LambdaExecutionRole'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource:
+                  - !GetAtt GameLogsTable.Arn
+                  - !Sub '${GameLogsTable.Arn}/index/*'
+
+  # Lambda Function: Store Game Log
+  StoreLogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-StoreLog'
+      CodeUri: lambda/
+      Handler: storeLog.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 256
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref GameLogsTable
+      Events:
+        StoreLogApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref LogsApi
+            Path: /logs
+            Method: POST
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # Lambda Function: Get All Logs
+  GetLogsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-GetLogs'
+      CodeUri: lambda/
+      Handler: getLogs.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 256
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref GameLogsTable
+      Events:
+        GetLogsApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref LogsApi
+            Path: /logs
+            Method: GET
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # Lambda Function: Get Single Log
+  GetLogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-GetLog'
+      CodeUri: lambda/
+      Handler: getLog.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 256
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref GameLogsTable
+      Events:
+        GetLogApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref LogsApi
+            Path: /logs/{logId}
+            Method: GET
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # API Gateway REST API
+  LogsApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub '${AWS::StackName}-LogsApi'
+      StageName: prod
+      Cors:
+        AllowOrigin: !Sub "'https://${CloudFrontDistribution.DomainName}'"
+        AllowHeaders: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+        AllowMethods: "'GET,POST,OPTIONS'"
+        AllowCredentials: true
+      Auth:
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !GetAtt UserPool.Arn
+            Identity:
+              Header: Authorization
+        DefaultAuthorizer: CognitoAuthorizer
   # S3 Bucket for React Application
   AppBucket:
     Type: AWS::S3::Bucket
@@ -118,6 +314,52 @@ Resources:
             Resource: !Sub '${ImageBucket.Arn}/*'
 
 Outputs:
+  # Cognito Outputs
+  UserPoolId:
+    Description: Cognito User Pool ID
+    Value: !Ref UserPool
+    Export:
+      Name: !Sub '${AWS::StackName}-UserPoolId'
+
+  UserPoolClientId:
+    Description: Cognito User Pool Client ID
+    Value: !Ref UserPoolClient
+    Export:
+      Name: !Sub '${AWS::StackName}-UserPoolClientId'
+
+  UserPoolArn:
+    Description: Cognito User Pool ARN
+    Value: !GetAtt UserPool.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-UserPoolArn'
+
+  # DynamoDB Outputs
+  GameLogsTableName:
+    Description: DynamoDB Table Name for Game Logs
+    Value: !Ref GameLogsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-GameLogsTableName'
+
+  GameLogsTableArn:
+    Description: DynamoDB Table ARN for Game Logs
+    Value: !GetAtt GameLogsTable.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-GameLogsTableArn'
+
+  # API Gateway Outputs
+  LogsApiUrl:
+    Description: API Gateway endpoint URL for logs
+    Value: !Sub 'https://${LogsApi}.execute-api.${AWS::Region}.amazonaws.com/prod'
+    Export:
+      Name: !Sub '${AWS::StackName}-LogsApiUrl'
+
+  LogsApiId:
+    Description: API Gateway REST API ID
+    Value: !Ref LogsApi
+    Export:
+      Name: !Sub '${AWS::StackName}-LogsApiId'
+
+  # CloudFront Outputs
   WebsiteURL:
     Description: CloudFront Distribution URL
     Value: !Sub 'https://${CloudFrontDistribution.DomainName}'

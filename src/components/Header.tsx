@@ -2,10 +2,11 @@
  * Header Component
  * App title and navigation for Pokemon TCG Log Visualizer
  *
- * Requirements: 6.1, 6.5
+ * Requirements: 1.6, 6.1, 6.5
  */
 
 import { Lightbulb, Moon } from 'pixelarticons/react'
+import { useAuth } from '../context/useAuth'
 import './Header.css'
 
 export interface HeaderProps {
@@ -23,6 +24,8 @@ export function Header({
   theme,
   onToggleTheme,
 }: HeaderProps) {
+  const { state, signOut } = useAuth()
+
   return (
     <header className="app-header">
       <button
@@ -33,6 +36,17 @@ export function Header({
       >
         {theme === 'dark' ? <Lightbulb width={20} height={20} /> : <Moon width={20} height={20} />}
       </button>
+      {state.isAuthenticated && (
+        <button
+          className="pixel-btn logout-btn"
+          onClick={signOut}
+          disabled={state.isLoading}
+          aria-label="Log out"
+          title="Log out"
+        >
+          {state.isLoading ? '...' : 'Logout'}
+        </button>
+      )}
       <div className="header-content">
         {showBackButton && currentView === 'results' && (
           <button

@@ -1,0 +1,22 @@
+{
+  "name": "tcg-log-visualizer-lambda",
+  "version": "1.0.0",
+  "description": "Lambda functions for TCG Log Visualizer authentication and log storage",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.0.0"
+  },
+  "devDependencies": {
+    "aws-sdk-client-mock": "^4.0.0",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

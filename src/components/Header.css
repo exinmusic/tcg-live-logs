@@ -26,6 +26,19 @@
   top: var(--spacing-lg);
 }
 
+.logout-btn {
+  position: absolute !important;
+  left: var(--spacing-md);
+  top: var(--spacing-lg);
+}
+
+.logout-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: 4px 4px 0px var(--shadow-color) !important;
+}
+
 .pixel-btn {
   font-family: var(--font-heading);
   text-transform: uppercase;

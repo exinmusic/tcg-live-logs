@@ -3,12 +3,14 @@
  * Handles view switching between input and results views
  * Provides view toggle for Timeline/Statistics in results view
  *
- * Requirements: 6.5, 6.6
+ * Requirements: 1.9, 6.5, 6.6
  */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AppProvider } from './context/AppContext'
+import { AuthProvider } from './context/AuthContext'
 import { useApp } from './context/useApp'
+import { useAuth } from './context/useAuth'
 import {
   Header,
   LogInputForm,
@@ -17,6 +19,8 @@ import {
   DeckAnalysisView,
   ErrorBoundary,
   LoadingSpinner,
+  ToastNotification,
+  AuthUI,
 } from './components'
 import { PixelIcon } from './components/PixelIcon'
 import './App.css'
@@ -28,7 +32,18 @@ type ResultsTab = 'timeline' | 'statistics' | 'deck-analysis'
  */
 function AppContent() {
   const { state, submitLog, clearLog, setView, reconstructDecks, fetchCardImages, toggleTheme } = useApp()
+  const { state: authState } = useAuth()
   const [activeTab, setActiveTab] = useState<ResultsTab>('timeline')
+  const [successToast, setSuccessToast] = useState<string | null>(null)
+
+  // Track previous auth state to detect transitions to authenticated
+  const prevIsAuthenticated = useRef(authState.isAuthenticated)
+  useEffect(() => {
+    if (!prevIsAuthenticated.current && authState.isAuthenticated) {
+      setSuccessToast('You are now signed in!')
+    }
+    prevIsAuthenticated.current = authState.isAuthenticated
+  }, [authState.isAuthenticated])
 
   // Trigger deck reconstruction when switching to deck-analysis tab
   useEffect(() => {
@@ -81,18 +96,31 @@ function AppContent() {
       <main className="app-main">
         {state.view === 'input' && (
           <div className="input-view">
+            {/* Show AuthUI when not authenticated so users can sign in/up */}
+            {!authState.isAuthenticated && (
+              <AuthUI />
+            )}
+
             <LogInputForm
               onSubmit={handleSubmit}
               onClear={handleClear}
               isLoading={state.isLoading}
               initialValue={state.rawLog}
             />
+
             {state.error && (
               <div className="error-banner" role="alert">
                 <span className="error-icon">
                   <PixelIcon type="warning" size={20} />
                 </span>
                 <span className="error-text">{state.error}</span>
+              </div>
+            )}
+
+            {/* Show past games placeholder when authenticated (real component added in task 9) */}
+            {authState.isAuthenticated && (
+              <div className="past-games-placeholder" aria-label="Past games section">
+                <p>Past games list coming soon</p>
               </div>
             )}
           </div>
@@ -157,19 +185,31 @@ function AppContent() {
           />
         )}
       </main>
+
+      {/* Success toast on sign-in / sign-up */}
+      {successToast && (
+        <ToastNotification
+          message={successToast}
+          type="success"
+          duration={3000}
+          onDismiss={() => setSuccessToast(null)}
+        />
+      )}
     </div>
   )
 }
 
 /**
- * Main App component wrapped with AppProvider and ErrorBoundary
+ * Main App component wrapped with AuthProvider, AppProvider and ErrorBoundary
  */
 function App() {
   return (
     <ErrorBoundary>
-      <AppProvider>
-        <AppContent />
-      </AppProvider>
+      <AuthProvider>
+        <AppProvider>
+          <AppContent />
+        </AppProvider>
+      </AuthProvider>
     </ErrorBoundary>
   )
 }

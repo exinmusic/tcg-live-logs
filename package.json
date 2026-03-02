@@ -24,6 +24,7 @@
     "upload:images": "bash scripts/upload-images.sh"
   },
   "dependencies": {
+    "aws-amplify": "^6.16.2",
     "cheerio": "^1.2.0",
     "pixelarticons": "^2.0.2",
     "pokemon-tcg-sdk-typescript": "^1.3.4",
