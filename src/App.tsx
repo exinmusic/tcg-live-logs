@@ -21,8 +21,12 @@ import {
   LoadingSpinner,
   ToastNotification,
   AuthUI,
+  PastGamesList,
+  UnauthenticatedMessage,
 } from './components'
 import { PixelIcon } from './components/PixelIcon'
+import type { GameLog } from './types'
+import { logStorageService } from './services/logStorageService'
 import './App.css'
 
 type ResultsTab = 'timeline' | 'statistics' | 'deck-analysis'
@@ -35,6 +39,8 @@ function AppContent() {
   const { state: authState } = useAuth()
   const [activeTab, setActiveTab] = useState<ResultsTab>('timeline')
   const [successToast, setSuccessToast] = useState<string | null>(null)
+  const [storageLoading, setStorageLoading] = useState(false)
+  const [storageToast, setStorageToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
   // Track previous auth state to detect transitions to authenticated
   const prevIsAuthenticated = useRef(authState.isAuthenticated)
@@ -71,8 +77,26 @@ function AppContent() {
     }
   }, [activeTab, state.matchData, state.deckAnalysis.playerDecks, reconstructDecks, fetchCardImages])
 
-  const handleSubmit = async (logText: string) => {
-    await submitLog(logText)
+  const handleSelectLog = async (log: GameLog) => {
+    // Load the selected log's content into the visualization area
+    await submitLog(log.content)
+  }
+
+  const handleSubmit = async (logText: string) => {    await submitLog(logText)
+
+    // If authenticated, store the log after visualization
+    if (authState.isAuthenticated && authState.tokens?.idToken) {
+      setStorageLoading(true)
+      try {
+        await logStorageService.storeLog(logText, authState.tokens.idToken)
+        setStorageToast({ message: 'Game log saved successfully!', type: 'success' })
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to save game log.'
+        setStorageToast({ message, type: 'error' })
+      } finally {
+        setStorageLoading(false)
+      }
+    }
   }
 
   const handleClear = () => {
@@ -117,11 +141,12 @@ function AppContent() {
               </div>
             )}
 
-            {/* Show past games placeholder when authenticated (real component added in task 9) */}
+            {/* Encourage account creation – shown when NOT authenticated, req 7.2 */}
+            <UnauthenticatedMessage />
+
+            {/* Past games list – shown when authenticated, req 3.1, 3.7 */}
             {authState.isAuthenticated && (
-              <div className="past-games-placeholder" aria-label="Past games section">
-                <p>Past games list coming soon</p>
-              </div>
+              <PastGamesList onSelectLog={handleSelectLog} />
             )}
           </div>
         )}
@@ -184,6 +209,14 @@ function AppContent() {
             overlay
           />
         )}
+
+        {storageLoading && (
+          <LoadingSpinner
+            size="medium"
+            message="Saving game log..."
+            overlay
+          />
+        )}
       </main>
 
       {/* Success toast on sign-in / sign-up */}
@@ -193,6 +226,16 @@ function AppContent() {
           type="success"
           duration={3000}
           onDismiss={() => setSuccessToast(null)}
+        />
+      )}
+
+      {/* Storage operation toast */}
+      {storageToast && (
+        <ToastNotification
+          message={storageToast.message}
+          type={storageToast.type}
+          duration={4000}
+          onDismiss={() => setStorageToast(null)}
         />
       )}
     </div>

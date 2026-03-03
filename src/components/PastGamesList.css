@@ -1,0 +1,124 @@
+/* PastGamesList Component Styles */
+
+.past-games-list {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 2px solid var(--color-border, #444);
+  background: var(--color-surface, #1a1a2e);
+  font-family: var(--font-mono, monospace);
+}
+
+.past-games-list__title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1rem;
+  color: var(--color-accent, #f8c300);
+}
+
+/* Empty state */
+.past-games-list__empty {
+  color: var(--color-text-muted, #888);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+/* Error state */
+.past-games-list__error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--color-error-bg, rgba(220, 38, 38, 0.15));
+  border: 1px solid var(--color-error, #dc2626);
+  color: var(--color-error, #dc2626);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.past-games-list__retry-btn {
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.past-games-list__retry-btn:hover {
+  background: var(--color-error, #dc2626);
+  color: #fff;
+}
+
+/* Log list */
+.past-games-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.past-games-list__item {
+  border: 1px solid var(--color-border, #444);
+}
+
+.past-games-list__item--selected {
+  border-color: var(--color-accent, #f8c300);
+}
+
+.past-games-list__item-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: var(--color-surface-alt, #16213e);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--color-text, #e0e0e0);
+  text-align: left;
+  transition: background 0.15s ease;
+  gap: 1rem;
+}
+
+.past-games-list__item-btn:hover:not(:disabled) {
+  background: var(--color-surface-hover, #0f3460);
+}
+
+.past-games-list__item-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.past-games-list__item--selected .past-games-list__item-btn {
+  background: var(--color-surface-hover, #0f3460);
+  color: var(--color-accent, #f8c300);
+}
+
+.past-games-list__item-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+}
+
+.past-games-list__item-timestamp {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #888);
+  white-space: nowrap;
+}
+
+.past-games-list__item--selected .past-games-list__item-timestamp {
+  color: inherit;
+}

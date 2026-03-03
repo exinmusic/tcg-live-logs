@@ -15,7 +15,7 @@ This implementation plan adds user authentication via AWS Cognito and persistent
   - Create IAM roles for Lambda functions with DynamoDB access
   - _Requirements: 1.1, 5.1, 5.7_
 
-- [ ] 2. Implement backend Lambda functions
+- [x] 2. Implement backend Lambda functions
   - [x] 2.1 Create StoreLogFunction Lambda handler
     - Implement handler to extract user ID from JWT claims
     - Generate unique log ID using UUID
@@ -166,8 +166,8 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Test loading state display
     - _Requirements: 1.2, 1.3, 1.5, 6.5_
 
-- [ ] 7. Implement log storage service
-  - [ ] 7.1 Create LogStorageService class
+- [x] 7. Implement log storage service
+  - [x] 7.1 Create LogStorageService class
     - Implement storeLog method to POST log content to API
     - Include JWT token in Authorization header
     - Handle 401 errors (unauthorized) by prompting re-authentication
@@ -175,14 +175,14 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Return logId and timestamp on success
     - _Requirements: 2.1, 5.2, 6.2, 6.4_
   
-  - [ ] 7.2 Implement getLogs method
+  - [x] 7.2 Implement getLogs method
     - Send GET request to /logs endpoint with JWT token
     - Handle 401 errors by prompting re-authentication
     - Handle network errors with user-friendly messages
     - Return array of GameLog objects
     - _Requirements: 3.2, 5.3, 6.3, 6.4_
   
-  - [ ] 7.3 Implement getLog method
+  - [x] 7.3 Implement getLog method
     - Send GET request to /logs/{logId} endpoint with JWT token
     - Handle 401 errors by prompting re-authentication
     - Handle 403 errors (forbidden) with appropriate message
@@ -197,8 +197,8 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - **Property 18: Network errors display user-friendly messages**
     - **Validates: Requirements 2.5, 5.6, 6.1, 6.2, 6.3**
 
-- [ ] 8. Integrate log storage with existing log submission
-  - [ ] 8.1 Update log submission handler
+- [x] 8. Integrate log storage with existing log submission
+  - [x] 8.1 Update log submission handler
     - Check if user is authenticated using AuthContext
     - If authenticated, call LogStorageService.storeLog after visualization
     - Display loading indicator during storage operation
@@ -217,8 +217,8 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Test error handling during storage
     - _Requirements: 7.1, 7.3, 7.4_
 
-- [ ] 9. Implement past games list component
-  - [ ] 9.1 Create PastGamesList component
+- [x] 9. Implement past games list component
+  - [x] 9.1 Create PastGamesList component
     - Display component only when user is authenticated
     - Call LogStorageService.getLogs on component mount
     - Display loading indicator while fetching logs
@@ -227,7 +227,7 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Handle errors with user-friendly messages
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.6, 3.7, 6.3, 6.5_
   
-  - [ ] 9.2 Implement log selection functionality
+  - [x] 9.2 Implement log selection functionality
     - Add click handler to each log item
     - Call LogStorageService.getLog when log is clicked
     - Load log content into visualization area
@@ -250,21 +250,21 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Test error handling
     - _Requirements: 3.1, 3.6, 3.7_
 
-- [ ] 10. Add unauthenticated user messaging
+- [x] 10. Add unauthenticated user messaging
   - Display message encouraging account creation below log input area
   - Show message only when user is not authenticated
   - Hide message when user is authenticated
   - Include benefits of creating an account (log storage, history)
   - _Requirements: 7.2_
 
-- [ ] 11. Implement comprehensive error handling
-  - [ ] 11.1 Create error categorization utility
+- [x] 11. Implement comprehensive error handling
+  - [x] 11.1 Create error categorization utility
     - Distinguish between authentication, authorization, and system errors
     - Map HTTP status codes to error categories
     - Generate user-friendly error messages for each category
     - _Requirements: 6.4_
   
-  - [ ] 11.2 Add retry logic for transient failures
+  - [x] 11.2 Add retry logic for transient failures
     - Implement exponential backoff for network errors
     - Retry 5xx errors up to 3 times
     - Do not retry 4xx errors (client errors)
@@ -284,7 +284,7 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Test retry logic for transient failures
     - _Requirements: 6.1, 6.2, 6.3, 6.4_
 
-- [ ] 12. Checkpoint - Verify end-to-end functionality
+- [x] 12. Checkpoint - Verify end-to-end functionality
   - Test complete signup flow (create account, verify email if required)
   - Test complete login flow (authenticate, restore session)
   - Test log submission and storage for authenticated users
@@ -295,20 +295,20 @@ This implementation plan adds user authentication via AWS Cognito and persistent
   - Verify all loading indicators display correctly
   - Ask the user if questions arise
 
-- [ ] 13. Integration and final wiring
-  - [ ] 13.1 Wire AuthProvider into application root
+- [x] 13. Integration and final wiring
+  - [x] 13.1 Wire AuthProvider into application root
     - Wrap application with AuthProvider component
     - Ensure all components have access to AuthContext
     - Initialize Amplify configuration on app load
     - _Requirements: 1.1, 4.2_
   
-  - [ ] 13.2 Position PastGamesList below log input area
+  - [x] 13.2 Position PastGamesList below log input area
     - Add PastGamesList component to main view
     - Position below existing log input textarea
     - Ensure responsive layout on mobile devices
     - _Requirements: 3.1_
   
-  - [ ] 13.3 Update application to handle authentication state
+  - [x] 13.3 Update application to handle authentication state
     - Show AuthUI when user is not authenticated
     - Show logout button when user is authenticated
     - Show PastGamesList when user is authenticated
@@ -322,7 +322,7 @@ This implementation plan adds user authentication via AWS Cognito and persistent
     - Test error recovery flows
     - _Requirements: 1.8, 7.1, 7.3_
 
-- [ ] 14. Final checkpoint - Comprehensive testing
+- [x] 14. Final checkpoint - Comprehensive testing
   - Run all unit tests and verify >80% coverage
   - Run all property-based tests (22 properties)
   - Test on multiple browsers (Chrome, Firefox, Safari)

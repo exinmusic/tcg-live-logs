@@ -1,0 +1,34 @@
+/* UnauthenticatedMessage Component Styles – req 7.2 */
+
+.unauth-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 2px solid var(--color-border, #444);
+  background: var(--color-surface, #1a1a2e);
+  font-family: var(--font-mono, monospace);
+  color: var(--color-text-muted, #888);
+  font-size: 0.875rem;
+}
+
+.unauth-message__heading {
+  margin: 0 0 0.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  color: var(--color-accent, #f8c300);
+}
+
+.unauth-message__benefits {
+  margin: 0 0 0.5rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.unauth-message__hint {
+  margin: 0;
+  font-size: 0.8rem;
+}

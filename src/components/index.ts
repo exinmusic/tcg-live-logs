@@ -60,3 +60,9 @@ export type { IconType } from './PixelIcon'
 
 export { AuthUI } from './AuthUI'
 export type { AuthUIProps } from './AuthUI'
+
+export { PastGamesList } from './PastGamesList'
+export type { PastGamesListProps } from './PastGamesList'
+
+export { UnauthenticatedMessage } from './UnauthenticatedMessage'
+

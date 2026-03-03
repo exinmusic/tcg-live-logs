@@ -127,6 +127,17 @@ export type ParseResult =
   | { success: false; error: string }
 
 /**
+ * Game log stored in the backend
+ */
+export interface GameLog {
+  logId: string
+  userId: string
+  content: string
+  timestamp: number
+  createdAt: string // ISO 8601 format
+}
+
+/**
  * PokeAPI response structure
  */
 export interface PokeAPIResponse {
