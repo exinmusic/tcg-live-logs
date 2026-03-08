@@ -21,9 +21,37 @@
 
 /* Input View */
 .input-view {
-  max-width: var(--max-width-content);
+  max-width: var(--max-width-xl);
   margin: 0 auto;
   animation: fadeIn var(--transition-base);
+}
+
+/* Side-by-side layout for auth + log input when not authenticated */
+.input-view__split {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.input-view__auth {
+  position: sticky;
+  top: var(--spacing-lg);
+}
+
+.input-view__form {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .input-view__split {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .input-view__auth {
+    position: static;
+  }
 }
 
 /* Error Banner */

@@ -1,11 +1,13 @@
 const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocumentClient, QueryCommand } = require('@aws-sdk/lib-dynamodb');
+const { getCorsHeaders } = require('./corsHeaders');
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 exports.handler = async (event) => {
   console.log('Event:', JSON.stringify(event, null, 2));
+  const corsHeaders = getCorsHeaders(event);
 
   try {
     // Extract user ID from Cognito authorizer claims
@@ -14,11 +16,7 @@ exports.handler = async (event) => {
     if (!userId) {
       return {
         statusCode: 401,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Unauthorized: User ID not found' }),
       };
     }
@@ -39,11 +37,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
+      headers: corsHeaders,
       body: JSON.stringify({
         logs,
       }),
@@ -52,11 +46,7 @@ exports.handler = async (event) => {
     console.error('Error retrieving logs:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Failed to retrieve logs' }),
     };
   }

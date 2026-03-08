@@ -123,6 +123,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref GameLogsTable
+          ALLOWED_ORIGIN: !Sub 'https://${CloudFrontDistribution.DomainName}'
       Events:
         StoreLogApi:
           Type: Api
@@ -147,6 +148,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref GameLogsTable
+          ALLOWED_ORIGIN: !Sub 'https://${CloudFrontDistribution.DomainName}'
       Events:
         GetLogsApi:
           Type: Api
@@ -171,6 +173,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref GameLogsTable
+          ALLOWED_ORIGIN: !Sub 'https://${CloudFrontDistribution.DomainName}'
       Events:
         GetLogApi:
           Type: Api
@@ -199,6 +202,7 @@ Resources:
             Identity:
               Header: Authorization
         DefaultAuthorizer: CognitoAuthorizer
+        AddDefaultAuthorizerToCorsPreflight: false
   # S3 Bucket for React Application
   AppBucket:
     Type: AWS::S3::Bucket

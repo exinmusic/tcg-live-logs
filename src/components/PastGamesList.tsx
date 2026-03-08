@@ -40,6 +40,53 @@ function formatTimestamp(log: GameLog): string {
   })
 }
 
+/**
+ * Extract player names from the raw log content's setup section.
+ * Returns "Player1 vs Player2" or falls back to "Game Log".
+ */
+function extractMatchLabel(log: GameLog): string {
+  if (!log.content) return 'Game Log'
+
+  const lines = log.content.split('\n').slice(0, 20)
+  let player1: string | null = null
+  let player2: string | null = null
+
+  for (const line of lines) {
+    const coinChoice = line.match(/^(\w+) chose (?:heads|tails) for the opening coin flip/)
+    if (coinChoice) {
+      const name = coinChoice[1]
+      if (!player1) player1 = name
+      else if (name !== player1 && !player2) player2 = name
+    }
+
+    const coinWinner = line.match(/^(\w+) won the coin toss/)
+    if (coinWinner) {
+      const name = coinWinner[1]
+      if (!player1) player1 = name
+      else if (name !== player1 && !player2) player2 = name
+    }
+
+    const goFirst = line.match(/^(\w+) decided to go (?:first|second)/)
+    if (goFirst) {
+      const name = goFirst[1]
+      if (!player1) player1 = name
+      else if (name !== player1 && !player2) player2 = name
+    }
+
+    const openingHand = line.match(/^(\w+) drew \d+ cards for the opening hand/)
+    if (openingHand) {
+      const name = openingHand[1]
+      if (!player1) player1 = name
+      else if (name !== player1 && !player2) player2 = name
+    }
+
+    if (player1 && player2) break
+  }
+
+  if (player1 && player2) return `${player1} vs ${player2}`
+  return 'Game Log'
+}
+
 export function PastGamesList({ onSelectLog }: PastGamesListProps) {
   const { state: authState } = useAuth()
 
@@ -155,7 +202,7 @@ export function PastGamesList({ onSelectLog }: PastGamesListProps) {
                 disabled={pgState.isLoadingLog}
                 aria-pressed={pgState.selectedLogId === log.logId}
               >
-                <span className="past-games-list__item-label">Game Log</span>
+                <span className="past-games-list__item-label">{extractMatchLabel(log)}</span>
                 <span className="past-games-list__item-timestamp">
                   {formatTimestamp(log)}
                 </span>

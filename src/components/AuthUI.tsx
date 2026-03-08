@@ -57,10 +57,15 @@ function validateSignup(fields: FormFields): FieldErrors {
 }
 
 export function AuthUI({ onAuthSuccess }: AuthUIProps) {
-  const { state, signIn, signUp } = useAuth()
+  const { state, signIn, signUp, confirmSignUp } = useAuth()
   const [mode, setMode] = useState<Mode>('login')
   const [fields, setFields] = useState<FormFields>({ email: '', password: '', confirmPassword: '' })
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
+  const [confirmationCode, setConfirmationCode] = useState('')
+
+  // Don't render when already authenticated — prevents password manager
+  // from detecting a filled form during the unmount transition
+  if (state.isAuthenticated) return null
 
   const handleFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -90,16 +95,71 @@ export function AuthUI({ onAuthSuccess }: AuthUIProps) {
 
     if (mode === 'login') {
       await signIn(fields.email, fields.password)
+      // Clear fields immediately so password managers don't see filled
+      // inputs during the re-render/unmount transition
+      setFields({ email: '', password: '', confirmPassword: '' })
+      onAuthSuccess?.()
     } else {
       await signUp(fields.email, fields.password)
+      // Don't call onAuthSuccess — user needs to confirm their email first
     }
-    // Parent handles UI updates by observing AuthContext state changes.
-    // onAuthSuccess is an optional callback for additional side effects.
-    onAuthSuccess?.()
+  }
+
+  const handleConfirmSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    if (!confirmationCode.trim()) return
+    await confirmSignUp(state.confirmationEmail!, confirmationCode)
+    // After confirmation, switch to login so they can sign in
   }
 
   const isLoading = state.isLoading
 
+  // ── Confirmation code view ──────────────────────────────────────────────
+  if (state.needsConfirmation) {
+    return (
+      <div className="auth-ui">
+        {state.error && (
+          <div className="auth-banner-error" role="alert">
+            {state.error}
+          </div>
+        )}
+
+        <div className="auth-confirmation-info">
+          We sent a verification code to <span className="auth-confirmation-email">{state.confirmationEmail}</span>. Enter it below to confirm your account.
+        </div>
+
+        <form className="auth-form" onSubmit={handleConfirmSubmit} noValidate>
+          <div className="auth-form-group">
+            <label htmlFor="auth-confirmation-code" className="auth-label">
+              Verification Code
+            </label>
+            <input
+              id="auth-confirmation-code"
+              name="confirmationCode"
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              className="auth-input"
+              value={confirmationCode}
+              onChange={(e) => setConfirmationCode(e.target.value)}
+              disabled={isLoading}
+              placeholder="Enter 6-digit code"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="auth-submit-btn"
+            disabled={isLoading || !confirmationCode.trim()}
+          >
+            {isLoading ? 'Verifying...' : 'Verify Email'}
+          </button>
+        </form>
+      </div>
+    )
+  }
+
+  // ── Login / Sign-up view ────────────────────────────────────────────────
   return (
     <div className="auth-ui">
       {/* Banner error for network/service errors from AuthContext */}

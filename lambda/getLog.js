@@ -1,11 +1,13 @@
 const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocumentClient, GetCommand } = require('@aws-sdk/lib-dynamodb');
+const { getCorsHeaders } = require('./corsHeaders');
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 exports.handler = async (event) => {
   console.log('Event:', JSON.stringify(event, null, 2));
+  const corsHeaders = getCorsHeaders(event);
 
   try {
     // Extract user ID from Cognito authorizer claims
@@ -14,11 +16,7 @@ exports.handler = async (event) => {
     if (!userId) {
       return {
         statusCode: 401,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Unauthorized: User ID not found' }),
       };
     }
@@ -29,11 +27,7 @@ exports.handler = async (event) => {
     if (!logId) {
       return {
         statusCode: 400,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Missing logId parameter' }),
       };
     }
@@ -53,11 +47,7 @@ exports.handler = async (event) => {
     if (!result.Item) {
       return {
         statusCode: 404,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Log not found' }),
       };
     }
@@ -66,11 +56,7 @@ exports.handler = async (event) => {
     if (result.Item.userId !== userId) {
       return {
         statusCode: 403,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Forbidden: You do not have access to this log' }),
       };
     }
@@ -78,22 +64,14 @@ exports.handler = async (event) => {
     // Return log data
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
+      headers: corsHeaders,
       body: JSON.stringify(result.Item),
     };
   } catch (error) {
     console.error('Error retrieving log:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Failed to retrieve log' }),
     };
   }

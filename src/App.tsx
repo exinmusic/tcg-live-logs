@@ -120,17 +120,29 @@ function AppContent() {
       <main className="app-main">
         {state.view === 'input' && (
           <div className="input-view">
-            {/* Show AuthUI when not authenticated so users can sign in/up */}
-            {!authState.isAuthenticated && (
-              <AuthUI />
+            {/* Side-by-side layout when not authenticated */}
+            {!authState.isAuthenticated ? (
+              <div className="input-view__split">
+                <div className="input-view__auth">
+                  <AuthUI />
+                </div>
+                <div className="input-view__form">
+                  <LogInputForm
+                    onSubmit={handleSubmit}
+                    onClear={handleClear}
+                    isLoading={state.isLoading}
+                    initialValue={state.rawLog}
+                  />
+                </div>
+              </div>
+            ) : (
+              <LogInputForm
+                onSubmit={handleSubmit}
+                onClear={handleClear}
+                isLoading={state.isLoading}
+                initialValue={state.rawLog}
+              />
             )}
-
-            <LogInputForm
-              onSubmit={handleSubmit}
-              onClear={handleClear}
-              isLoading={state.isLoading}
-              initialValue={state.rawLog}
-            />
 
             {state.error && (
               <div className="error-banner" role="alert">

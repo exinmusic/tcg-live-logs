@@ -1,34 +1,44 @@
-/* UnauthenticatedMessage Component Styles – req 7.2 */
+/**
+ * UnauthenticatedMessage Styles - Retro Pixel Restyling
+ * Requirements: 7.2
+ */
 
 .unauth-message {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  border: 2px solid var(--color-border, #444);
-  background: var(--color-surface, #1a1a2e);
-  font-family: var(--font-mono, monospace);
-  color: var(--color-text-muted, #888);
-  font-size: 0.875rem;
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border: var(--retro-border);
+  border-radius: 0px;
+  background-color: var(--bg-secondary);
+  box-shadow: var(--retro-shadow);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
 }
 
 .unauth-message__heading {
-  margin: 0 0 0.5rem;
-  font-weight: bold;
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-normal);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-size: 0.85rem;
-  color: var(--color-accent, #f8c300);
+  color: var(--color-primary);
+  border-bottom: 2px dashed var(--border-primary);
+  padding-bottom: var(--spacing-xs);
 }
 
 .unauth-message__benefits {
-  margin: 0 0 0.5rem;
+  margin: var(--spacing-sm) 0;
   padding-left: 1.25rem;
   list-style: disc;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--spacing-xs);
+  color: var(--text-primary);
 }
 
 .unauth-message__hint {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
 }

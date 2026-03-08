@@ -4,12 +4,19 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "pokemon-tcg-visualizer"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-qvu3v64hv4kt"
 s3_prefix = "tcg-log-visualizer"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
 parameter_overrides = "CognitoUserPoolName=tcg-log-visualizer-users"
 image_repositories = []
+
+[default.package]
+[default.package.parameters]
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-qvu3v64hv4kt"
+s3_prefix = "tcg-log-visualizer"
+region = "us-east-1"
 
 [default.build]
 [default.build.parameters]

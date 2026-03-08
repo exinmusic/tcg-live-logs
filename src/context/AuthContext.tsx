@@ -5,7 +5,7 @@
 
 import { createContext, useReducer, useCallback, useEffect, type ReactNode } from 'react'
 import { Amplify } from 'aws-amplify'
-import { signUp as amplifySignUp, signIn as amplifySignIn, signOut as amplifySignOut, fetchAuthSession, getCurrentUser as amplifyGetCurrentUser } from 'aws-amplify/auth'
+import { signUp as amplifySignUp, confirmSignUp as amplifyConfirmSignUp, signIn as amplifySignIn, signOut as amplifySignOut, fetchAuthSession, getCurrentUser as amplifyGetCurrentUser } from 'aws-amplify/auth'
 
 // ---------------------------------------------------------------------------
 // Amplify configuration
@@ -37,11 +37,14 @@ export interface AuthState {
   } | null
   isLoading: boolean
   error: string | null
+  needsConfirmation: boolean
+  confirmationEmail: string | null
 }
 
 export interface AuthContextValue {
   state: AuthState
   signUp: (email: string, password: string) => Promise<void>
+  confirmSignUp: (email: string, code: string) => Promise<void>
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
   getCurrentUser: () => Promise<{ userId: string; email: string } | null>
@@ -57,7 +60,8 @@ type AuthAction =
   | { type: 'AUTH_ERROR'; payload: string }
   | { type: 'SIGN_OUT' }
   | { type: 'CLEAR_ERROR' }
-  | { type: 'SIGN_UP_SUCCESS' }
+  | { type: 'SIGN_UP_NEEDS_CONFIRMATION'; payload: string }
+  | { type: 'CONFIRMATION_SUCCESS' }
 
 // ---------------------------------------------------------------------------
 // Initial state
@@ -69,6 +73,8 @@ const initialState: AuthState = {
   tokens: null,
   isLoading: false,
   error: null,
+  needsConfirmation: false,
+  confirmationEmail: null,
 }
 
 // ---------------------------------------------------------------------------
@@ -106,8 +112,11 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
     case 'CLEAR_ERROR':
       return { ...state, error: null }
 
-    case 'SIGN_UP_SUCCESS':
-      return { ...state, isLoading: false, error: null }
+    case 'SIGN_UP_NEEDS_CONFIRMATION':
+      return { ...state, isLoading: false, error: null, needsConfirmation: true, confirmationEmail: action.payload }
+
+    case 'CONFIRMATION_SUCCESS':
+      return { ...state, isLoading: false, error: null, needsConfirmation: false, confirmationEmail: null }
 
     default:
       return state
@@ -152,7 +161,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
         options: { userAttributes: { email } },
       })
-      dispatch({ type: 'SIGN_UP_SUCCESS' })
+      dispatch({ type: 'SIGN_UP_NEEDS_CONFIRMATION', payload: email })
     } catch (err: unknown) {
       const name = (err as { name?: string }).name ?? ''
       let message: string
@@ -169,6 +178,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
         message = 'Unable to connect. Please check your internet connection.'
       } else {
         message = 'Sign up failed. Please try again.'
+      }
+      dispatch({ type: 'AUTH_ERROR', payload: message })
+    }
+  }, [])
+
+  /**
+   * Confirm a new user's sign-up with the verification code sent to their email.
+   */
+  const confirmSignUp = useCallback(async (email: string, code: string): Promise<void> => {
+    dispatch({ type: 'AUTH_START' })
+    try {
+      await amplifyConfirmSignUp({ username: email, confirmationCode: code })
+      dispatch({ type: 'CONFIRMATION_SUCCESS' })
+    } catch (err: unknown) {
+      const name = (err as { name?: string }).name ?? ''
+      let message: string
+      if (name === 'CodeMismatchException') {
+        message = 'Invalid verification code. Please try again.'
+      } else if (name === 'ExpiredCodeException') {
+        message = 'Verification code has expired. Please sign up again.'
+      } else if (
+        name === 'NetworkError' ||
+        (err instanceof Error && err.message.toLowerCase().includes('network'))
+      ) {
+        message = 'Unable to connect. Please check your internet connection.'
+      } else {
+        message = 'Verification failed. Please try again.'
       }
       dispatch({ type: 'AUTH_ERROR', payload: message })
     }
@@ -281,6 +317,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const value: AuthContextValue = {
     state,
     signUp,
+    confirmSignUp,
     signIn,
     signOut,
     getCurrentUser,

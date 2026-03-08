@@ -1,7 +1,240 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Pokemon TCG Log Visualizer - Static Site Hosting with CloudFront
+Parameters:
+  CognitoUserPoolName:
+    Type: String
+    Default: tcg-log-visualizer-users
+    Description: Name for the Cognito User Pool
 Resources:
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName:
+        Ref: CognitoUserPoolName
+      UsernameAttributes:
+      - email
+      AutoVerifiedAttributes:
+      - email
+      EmailConfiguration:
+        EmailSendingAccount: COGNITO_DEFAULT
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+      Schema:
+      - Name: email
+        AttributeDataType: String
+        Required: true
+        Mutable: false
+      UserAttributeUpdateSettings:
+        AttributesRequireVerificationBeforeUpdate:
+        - email
+    Metadata:
+      SamResourceId: UserPool
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName:
+        Fn::Sub: ${AWS::StackName}-web-client
+      UserPoolId:
+        Ref: UserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+      - ALLOW_USER_PASSWORD_AUTH
+      - ALLOW_REFRESH_TOKEN_AUTH
+      - ALLOW_USER_SRP_AUTH
+      PreventUserExistenceErrors: ENABLED
+      TokenValidityUnits:
+        IdToken: hours
+        AccessToken: hours
+        RefreshToken: days
+      IdTokenValidity: 1
+      AccessTokenValidity: 1
+      RefreshTokenValidity: 30
+    Metadata:
+      SamResourceId: UserPoolClient
+  GameLogsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:
+        Fn::Sub: ${AWS::StackName}-GameLogs
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: userId
+        AttributeType: S
+      - AttributeName: logId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: userId
+        KeyType: HASH
+      - AttributeName: logId
+        KeyType: RANGE
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+    Metadata:
+      SamResourceId: GameLogsTable
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName:
+        Fn::Sub: ${AWS::StackName}-LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+      - PolicyName: DynamoDBAccess
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Query
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            Resource:
+            - Fn::GetAtt:
+              - GameLogsTable
+              - Arn
+            - Fn::Sub: ${GameLogsTable.Arn}/index/*
+    Metadata:
+      SamResourceId: LambdaExecutionRole
+  StoreLogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${AWS::StackName}-StoreLog
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-qvu3v64hv4kt/tcg-log-visualizer/15c04273bf17e7bf8ca6a161aef3c409
+      Handler: storeLog.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 256
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: GameLogsTable
+          ALLOWED_ORIGIN:
+            Fn::Sub: https://${CloudFrontDistribution.DomainName}
+      Events:
+        StoreLogApi:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: LogsApi
+            Path: /logs
+            Method: POST
+            Auth:
+              Authorizer: CognitoAuthorizer
+    Metadata:
+      SamResourceId: StoreLogFunction
+  GetLogsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${AWS::StackName}-GetLogs
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-qvu3v64hv4kt/tcg-log-visualizer/15c04273bf17e7bf8ca6a161aef3c409
+      Handler: getLogs.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 256
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: GameLogsTable
+          ALLOWED_ORIGIN:
+            Fn::Sub: https://${CloudFrontDistribution.DomainName}
+      Events:
+        GetLogsApi:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: LogsApi
+            Path: /logs
+            Method: GET
+            Auth:
+              Authorizer: CognitoAuthorizer
+    Metadata:
+      SamResourceId: GetLogsFunction
+  GetLogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${AWS::StackName}-GetLog
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-qvu3v64hv4kt/tcg-log-visualizer/15c04273bf17e7bf8ca6a161aef3c409
+      Handler: getLog.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 256
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: GameLogsTable
+          ALLOWED_ORIGIN:
+            Fn::Sub: https://${CloudFrontDistribution.DomainName}
+      Events:
+        GetLogApi:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: LogsApi
+            Path: /logs/{logId}
+            Method: GET
+            Auth:
+              Authorizer: CognitoAuthorizer
+    Metadata:
+      SamResourceId: GetLogFunction
+  LogsApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name:
+        Fn::Sub: ${AWS::StackName}-LogsApi
+      StageName: prod
+      Cors:
+        AllowOrigin:
+          Fn::Sub: '''https://${CloudFrontDistribution.DomainName}'''
+        AllowHeaders: '''Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'''
+        AllowMethods: '''GET,POST,OPTIONS'''
+        AllowCredentials: true
+      Auth:
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn:
+              Fn::GetAtt:
+              - UserPool
+              - Arn
+            Identity:
+              Header: Authorization
+        DefaultAuthorizer: CognitoAuthorizer
+        AddDefaultAuthorizerToCorsPreflight: false
+    Metadata:
+      SamResourceId: LogsApi
   AppBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -131,6 +364,59 @@ Resources:
     Metadata:
       SamResourceId: ImageBucketPolicy
 Outputs:
+  UserPoolId:
+    Description: Cognito User Pool ID
+    Value:
+      Ref: UserPool
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-UserPoolId
+  UserPoolClientId:
+    Description: Cognito User Pool Client ID
+    Value:
+      Ref: UserPoolClient
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-UserPoolClientId
+  UserPoolArn:
+    Description: Cognito User Pool ARN
+    Value:
+      Fn::GetAtt:
+      - UserPool
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-UserPoolArn
+  GameLogsTableName:
+    Description: DynamoDB Table Name for Game Logs
+    Value:
+      Ref: GameLogsTable
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-GameLogsTableName
+  GameLogsTableArn:
+    Description: DynamoDB Table ARN for Game Logs
+    Value:
+      Fn::GetAtt:
+      - GameLogsTable
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-GameLogsTableArn
+  LogsApiUrl:
+    Description: API Gateway endpoint URL for logs
+    Value:
+      Fn::Sub: https://${LogsApi}.execute-api.${AWS::Region}.amazonaws.com/prod
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-LogsApiUrl
+  LogsApiId:
+    Description: API Gateway REST API ID
+    Value:
+      Ref: LogsApi
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-LogsApiId
   WebsiteURL:
     Description: CloudFront Distribution URL
     Value:
