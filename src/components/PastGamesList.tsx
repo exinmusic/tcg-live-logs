@@ -13,6 +13,77 @@ import { LoadingSpinner } from './LoadingSpinner'
 import type { GameLog } from '../types'
 import './PastGamesList.css'
 
+/**
+ * Parse damage dealt per turn from raw log content.
+ * Returns an array of total damage values per turn (one entry per turn).
+ * Log format: "[playerName]'s Turn" starts each turn,
+ * attacks look like "X's Pokémon used Attack on Y's Pokémon for 200 damage."
+ */
+function extractDamagePerTurn(content: string): number[] {
+  const turns: number[] = []
+  // Matches "X's Pokémon used Attack on Y's Pokémon for 200 damage"
+  const attackPattern = /for (\d+) damage/i
+  const turnPattern = /^.+'s Turn\s*$/
+
+  let currentTurnDamage = -1 // -1 = not yet in a turn
+
+  for (const line of content.split('\n')) {
+    if (turnPattern.test(line.trim())) {
+      if (currentTurnDamage >= 0) turns.push(currentTurnDamage)
+      currentTurnDamage = 0
+      continue
+    }
+    if (currentTurnDamage < 0) continue
+    const m = line.match(attackPattern)
+    if (m) currentTurnDamage += parseInt(m[1], 10)
+  }
+  if (currentTurnDamage > 0) turns.push(currentTurnDamage)
+
+  return turns
+}
+
+interface DamageHistogramProps {
+  content: string
+}
+
+function DamageHistogram({ content }: DamageHistogramProps) {
+  const data = extractDamagePerTurn(content)
+  if (data.length === 0) return null
+
+  const width = 120
+  const height = 28
+  const barGap = 1
+  const barWidth = Math.max(2, Math.floor((width - barGap * (data.length - 1)) / data.length))
+  const maxVal = Math.max(...data, 1)
+
+  return (
+    <svg
+      className="past-games-list__histogram"
+      width={width}
+      height={height}
+      aria-label="Damage per turn histogram"
+      role="img"
+    >
+      {data.map((val, i) => {
+        const barH = Math.max(1, Math.round((val / maxVal) * (height - 2)))
+        const x = i * (barWidth + barGap)
+        const y = height - barH
+        return (
+          <rect
+            key={i}
+            x={x}
+            y={y}
+            width={barWidth}
+            height={barH}
+            fill={val > 0 ? 'var(--color-primary)' : 'var(--border-secondary)'}
+            opacity={val > 0 ? 0.85 : 0.3}
+          />
+        )
+      })}
+    </svg>
+  )
+}
+
 export interface PastGamesListProps {
   onSelectLog: (log: GameLog) => void
 }
@@ -203,6 +274,7 @@ export function PastGamesList({ onSelectLog }: PastGamesListProps) {
                 aria-pressed={pgState.selectedLogId === log.logId}
               >
                 <span className="past-games-list__item-label">{extractMatchLabel(log)}</span>
+                {log.content && <DamageHistogram content={log.content} />}
                 <span className="past-games-list__item-timestamp">
                   {formatTimestamp(log)}
                 </span>

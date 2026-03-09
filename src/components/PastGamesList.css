@@ -142,6 +142,16 @@
   white-space: nowrap;
 }
 
+.past-games-list__histogram {
+  flex-shrink: 0;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.past-games-list__item--selected .past-games-list__histogram rect {
+  fill: var(--color-primary);
+}
+
 .past-games-list__item--selected .past-games-list__item-timestamp {
   color: var(--color-primary);
 }
