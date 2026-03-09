@@ -180,6 +180,8 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'CLEAR_LOG':
       return {
         ...initialState,
+        theme: state.theme,
+        crtEnabled: state.crtEnabled,
       }
 
     case 'FETCH_SPRITES_START':

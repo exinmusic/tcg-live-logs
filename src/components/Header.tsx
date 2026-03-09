@@ -58,6 +58,13 @@ export function Header({
           </button>
         )}
         <h1 className="app-title">
+          <img
+            src="/Pokemans_052.png"
+            alt=""
+            className="app-logo"
+            width={48}
+            height={48}
+          />
           Pokemon LIVE Analysis
         </h1>
         <p className="app-subtitle">

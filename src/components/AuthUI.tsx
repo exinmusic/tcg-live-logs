@@ -93,14 +93,18 @@ export function AuthUI({ onAuthSuccess }: AuthUIProps) {
 
     setFieldErrors({})
 
+    // Capture credentials then clear the form fields *before* the async
+    // call so the browser/password-manager never sees filled inputs after
+    // a successful submission.
+    const email = fields.email
+    const password = fields.password
+    setFields({ email: '', password: '', confirmPassword: '' })
+
     if (mode === 'login') {
-      await signIn(fields.email, fields.password)
-      // Clear fields immediately so password managers don't see filled
-      // inputs during the re-render/unmount transition
-      setFields({ email: '', password: '', confirmPassword: '' })
+      await signIn(email, password)
       onAuthSuccess?.()
     } else {
-      await signUp(fields.email, fields.password)
+      await signUp(email, password)
       // Don't call onAuthSuccess — user needs to confirm their email first
     }
   }
@@ -194,7 +198,7 @@ export function AuthUI({ onAuthSuccess }: AuthUIProps) {
       </div>
 
       {/* Form */}
-      <form className="auth-form" onSubmit={handleSubmit} noValidate>
+      <form className="auth-form" onSubmit={handleSubmit} noValidate autoComplete="off">
         {/* Email */}
         <div className="auth-form-group">
           <label htmlFor="auth-email" className="auth-label">
@@ -204,7 +208,7 @@ export function AuthUI({ onAuthSuccess }: AuthUIProps) {
             id="auth-email"
             name="email"
             type="email"
-            autoComplete="email"
+            autoComplete="off"
             className={`auth-input${fieldErrors.email ? ' auth-input--error' : ''}`}
             value={fields.email}
             onChange={handleFieldChange}
@@ -228,7 +232,7 @@ export function AuthUI({ onAuthSuccess }: AuthUIProps) {
             id="auth-password"
             name="password"
             type="password"
-            autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            autoComplete="off"
             className={`auth-input${fieldErrors.password ? ' auth-input--error' : ''}`}
             value={fields.password}
             onChange={handleFieldChange}
@@ -253,7 +257,7 @@ export function AuthUI({ onAuthSuccess }: AuthUIProps) {
               id="auth-confirm-password"
               name="confirmPassword"
               type="password"
-              autoComplete="new-password"
+              autoComplete="off"
               className={`auth-input${fieldErrors.confirmPassword ? ' auth-input--error' : ''}`}
               value={fields.confirmPassword}
               onChange={handleFieldChange}

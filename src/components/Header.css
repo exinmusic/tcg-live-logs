@@ -112,6 +112,21 @@
   gap: var(--spacing-sm);
 }
 
+/* Logo - theme adaptive */
+.app-logo {
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 2px 0px var(--shadow-color));
+  transition: filter var(--transition-base);
+}
+
+.light-theme .app-logo {
+  filter:
+    drop-shadow(2px 2px 0px var(--shadow-color))
+    brightness(0.85)
+    saturate(0.8)
+    sepia(0.15);
+}
+
 .title-icon {
   font-size: var(--font-size-2xl);
 }
@@ -131,6 +146,11 @@
 
   .app-title {
     font-size: var(--font-size-2xl);
+  }
+
+  .app-logo {
+    width: 36px;
+    height: 36px;
   }
 
   .back-button {
@@ -162,6 +182,11 @@
 @media (max-width: 480px) {
   .app-title {
     font-size: var(--font-size-xl);
+  }
+
+  .app-logo {
+    width: 28px;
+    height: 28px;
   }
 
   .app-subtitle {
